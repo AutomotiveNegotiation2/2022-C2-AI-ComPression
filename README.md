@@ -16,5 +16,20 @@
 
 ### Compression Code Description
 
-- **AI_based_compression** : biGRU 기반 AI 압축 모델
+- **AI_based_compression** : biGRU 기반 AI 압축 모델(Dzip)
 
+
+
+---
+
+
+
+# RESULT
+
+- AI 기반 압축 모델 활용 차량 내부 데이터 성능 평가
+
+### CAN Compression
+
+- AI 기반 압축 모델(Dzip) 활용 결과
+
+![image-20220816134853427](README.assets/image-20220816134853427.png)

@@ -1,14 +1,16 @@
 # AI_compression_model
 
+
+
 ## Description
 
 - biGRU 기반 압축 모델 Dzip
 
   - 산술 코딩과 결합된 NN 기반 모델링을 사용하는 시퀀셜 데이터 무손실 압축기
 
-- 결합된 모델을 사용하여 데이터를 압축하는 동안 적응적으로 학습됨.
+  - 결합된 모델을 사용하여 데이터를 압축하는 동안 적응적으로 학습됨.
 
-  
+    
 
 ## DATA
 
@@ -92,3 +94,11 @@ cd AI_based_compression
 python3 data_gen.py --file_name [CAN_data.csv]
 ```
 
+
+
+
+
+**CITE**
+
+- DZip: improved general-purpose loss less compression based on novel neural network modeling
+  - https://github.com/mohit1997/Dzip-torch
