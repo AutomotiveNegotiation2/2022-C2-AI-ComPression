@@ -24,11 +24,15 @@
 
 ## Dzip Compression RESULT
 
-- 압축 성능 지표는 Space saving 를 사용함.
+- 압축 성능 지표는 Space savings 를 사용함.
 
   ![평가지표](README.assets/Space_saving.JPG)
 
 
+
+![result](README.assets/dzip_graph.JPG)
+
+- CAN 데이터 크기를 증가시키며 Space Savings 결과를 확인한 그래프 
 
 
 

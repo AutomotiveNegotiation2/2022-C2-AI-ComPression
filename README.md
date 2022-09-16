@@ -31,6 +31,9 @@
 ### CAN Compression
 
 - AI 기반 압축 모델(Dzip) 및 룰셋 기반 압축 성능 비교
+  - 1차년도의 룰셋 기반 압축 알고리즘(LZMA, bz2, zlib)
+  - 2차년도 AI 기반 압축 모델(Dzip)
+
 
 ![image-20220816134853427](README.assets/image-20220816134853427.png)
 
@@ -38,4 +41,5 @@
 
   ![평가지표](README.assets/Space_saving.JPG)
 
-  
+
+- 정차 상황에서 룰셋 기반 압축의 성능(Space savings)은 주행 상황보다 높으며, AI 기반 압축 모델은 정차 및 주행 상황 모두에서 압축 성능이 뛰어남. 
