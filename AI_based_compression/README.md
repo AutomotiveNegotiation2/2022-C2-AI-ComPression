@@ -22,6 +22,14 @@
 
 
 
+## Dzip Compression RESULT
+
+- 압축 성능 지표는 Space saving 를 사용함.
+
+  ![평가지표](README.assets/Space_saving.JPG)
+
+
+
 
 
 ## Environment

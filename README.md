@@ -30,6 +30,12 @@
 
 ### CAN Compression
 
-- AI 기반 압축 모델(Dzip) 활용 결과
+- AI 기반 압축 모델(Dzip) 및 룰셋 기반 압축 성능 비교
 
 ![image-20220816134853427](README.assets/image-20220816134853427.png)
+
+- 압축 성능 지표는 Space Saving을 사용함.
+
+  ![평가지표](README.assets/Space_saving.JPG)
+
+  
