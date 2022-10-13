@@ -11,7 +11,7 @@
 
 - Compression Code
   - AI_based_compression
-
+  - Rule_based_compression
 
 
 ### Compression Code Description
