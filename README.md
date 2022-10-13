@@ -18,7 +18,7 @@
 
 - **AI_based_compression** : biGRU 기반 AI 압축 모델(Dzip)
 
-
+- **Rule_based_compression** : 복셀라이제이션 기반 압축 모델
 
 ---
 
@@ -43,3 +43,11 @@
 
 
 - 정차 상황에서 룰셋 기반 압축의 성능(Space savings)은 주행 상황보다 높으며, AI 기반 압축 모델은 정차 및 주행 상황 모두에서 압축 성능이 뛰어남. 
+
+- Rule 기반 압축 모델 활용 차량 라이다 데이터 성능 평가
+
+### Lidar Compression
+
+- 2차년도 복셀라이제이션 기반 압축 모델
+
+![image_voxelization](README.assets/voxelization_result.png)
