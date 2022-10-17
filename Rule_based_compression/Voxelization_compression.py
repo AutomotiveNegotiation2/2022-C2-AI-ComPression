@@ -13,8 +13,8 @@ def get_argument_parser():
                         help='voxel_size')
     parser.add_argument('--pcd_data_dir', type=str, default="pcd_data",
                         help='pcd_data_dir')
-    parser.add_argument('--img_data_path', type=str, default='image',
-                        help='img_data_path')
+    parser.add_argument('--img_data_dir', type=str, default='image',
+                        help='img_data_dir')
     parser.add_argument('--camera_cali', type=str, default='v_600_600.json',
                         help='camera_cali')
     parser.add_argument('--render_param', type=str, default="rendop.json",
@@ -24,7 +24,7 @@ if __name__ == "__main__":
     parser = get_argument_parser()
     FLAGS = parser.parse_args()
     PCD_DATA_PATH = FLAGS.pcd_data_dir
-    DATA_PATH = FLAGS.img_data_path
+    DATA_PATH = FLAGS.img_data_dir
     CAMERA_PARAM = FLAGS.camera_cali
     VIEW_RANDER_PARAM = FLAGS.render_param
     voxel_size_param = FLAGS.voxel_size
