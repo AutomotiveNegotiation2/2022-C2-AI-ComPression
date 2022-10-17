@@ -28,6 +28,8 @@
 
 - AI 기반 압축 모델 활용 차량 내부 데이터 성능 평가
 
+  
+
 ### CAN Compression
 
 - AI 기반 압축 모델(Dzip) 및 룰셋 기반 압축 성능 비교
@@ -46,8 +48,10 @@
 
 - Rule 기반 압축 모델 활용 차량 라이다 데이터 성능 평가
 
+  
+
 ### Lidar Compression
 
-- 2차년도 복셀라이제이션 기반 압축 모델
+- 2차년도 룰셋 기반 압축 모델(Voxelization)
 
 ![image_voxelization](README.assets/voxelization_result.png)
