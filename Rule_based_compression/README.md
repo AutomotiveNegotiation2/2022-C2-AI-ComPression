@@ -30,7 +30,19 @@
 
 ![image-20221017122751532](README.assets/voxelization_result.png)
 
+- 복셀 사이즈를 조절하여 압축 성능(Space savings)를 확인함.
 
+![image-20221017124028415](README.assets/image-20221017124028415.png)
+
+- 주행 환경에 따라 압축 성능이 달라지며 Point Cloud 데이터가 뭉쳐있는 부분이 압축 성능이 향상됨.(최대 13%)
+
+
+
+![image-20221017124046316](README.assets/image-20221017124046316.png)
+
+- 압축 성능이 향상되는 부분
+
+  
 
 
 ## Environment
