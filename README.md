@@ -28,7 +28,13 @@
 
 - AI 기반 압축 모델 활용 차량 내부 데이터 성능 평가
 
-  
+
+
+### 압축 성능 지표
+
+ ![평가지표](README.assets/Space_saving.JPG)
+
+
 
 ### CAN Compression
 
@@ -38,10 +44,6 @@
 
 
 ![image-20220816134853427](README.assets/image-20220816134853427.png)
-
-- 압축 성능 지표는 Space Saving을 사용함.
-
-  ![평가지표](README.assets/Space_saving.JPG)
 
 
 - 정차 상황에서 룰셋 기반 압축의 성능(Space savings)은 주행 상황보다 높으며, AI 기반 압축 모델은 정차 및 주행 상황 모두에서 압축 성능이 뛰어남. 
