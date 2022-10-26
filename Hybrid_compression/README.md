@@ -16,7 +16,13 @@
 
 ## DATA
 
-- 차량 내부 네트워크인 CAN에서 CAN 패킷을 수집함.
+- CAN_DATA : CAR HACKING: ATTACK & DEFENSE CHALLENGE 2020
+
+  - https://ieee-dataport.org/open-access/car-hacking-attack-defense-challenge-2020-dataset
+    - CITATION : Hyunjae Kang, Byung Il Kwak, Young Hun Lee, Haneol Lee, Hwejae Lee, Huy Kang Kim, February 3, 2021, "Car Hacking: Attack & Defense Challenge 2020 Dataset", IEEE Dataport, doi: [https://dx.doi.org/10.21227/qvr7-n418](https://www.google.com/url?q=https%3A%2F%2Fdx.doi.org%2F10.21227%2Fqvr7-n418&sa=D&sntz=1&usg=AOvVaw33jtPkJFFezo3LcnKQmvju)
+
+
+  - 해당 데이터 셋에서 정상 주행 및 정차 데이터만 압축에 사용하였음.
 
 
 
