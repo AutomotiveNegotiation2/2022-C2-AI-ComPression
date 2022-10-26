@@ -24,7 +24,7 @@
 
   - 해당 데이터 셋에서 정상 주행 및 정차 데이터만 압축에 사용하였음.
 
-
+- AVANTE에서 수집된 C-CAN
 
 
 
@@ -37,7 +37,14 @@
 
 
 
-- CAN 데이터 크기를 증가시키며 Space Savings 결과를 확인한 그래프 
+- 2400개의 CAN 패킷을 파싱하여 Space Savings 결과를 확인한 그래프 
+
+![평가지표](README.assets/compression_result.JPG)
+
+- 주행 중 AI 기반 압축 모델을 사용함
+  -  평균 압축률 : 72%
+- 정차 중 Rule 기반 압축 모델 사용함
+  - 평균 압축률 : 80%
 
 
 
