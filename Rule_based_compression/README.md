@@ -61,8 +61,16 @@
 - 또한 도커 생성 시, NVIDIA 그래픽 드라이버 설정 필요
 
 ```
-./setup.sh
+bash docker_setup.sh
 ```
+
+- 글로벌 환경에서 setup
+
+```
+bash setup.sh
+```
+
+
 
 
 
