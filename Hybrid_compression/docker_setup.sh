@@ -5,7 +5,7 @@ apt-get upgrade -y
 apt-get install bc -y
 apt-get install python3-pip -y
 apt-get install wget -y
-
+apt-get install python3-tk -y
 
 python3 -m pip install --upgrade pip
 python3 -m pip install --upgrade Pillow
