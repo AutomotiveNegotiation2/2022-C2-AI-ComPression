@@ -8,9 +8,16 @@ from utils import *
 from models_torch import *
 import time
 import json
-
+import argparse
+def get_argument_parser():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--hybrid_param_dir', type=str, default="hybrid_param.json",
+                        help='hybrid_param_dir')
+    return parser
 if __name__ == "__main__":
-    with open("hybrid_param.json") as f:
+    parser = get_argument_parser()
+    args = parser.parse_args()
+    with open(args.hybrid_param_dir) as f:
         hparam = json.load(f)
     data_dir = hparam["data_dir"]
     speed_can_id = hparam ["speed_can_id"]
