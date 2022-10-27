@@ -82,6 +82,15 @@ bash setup.sh
 
 ### Data Compression
 
+- bash 실행
+  - 파라미터  사이즈 0.12
+
+```
+bash PCD_COMPRESSION.sh
+```
+
+
+
 
 
 - 입력 : 이미지 데이터 디렉토리, Point Cloud 데이터 디렉토리, Voxel_size, 뷰 옵션, 렌더링 옵션
