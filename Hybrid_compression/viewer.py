@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 from collections import deque
 import numpy as np
-
+matplotlib.use('TkAgg')
 plt.style.use('fivethirtyeight')
 
 def view(AI_res_data,AL_res_data,now_spd_list,delay_list):
