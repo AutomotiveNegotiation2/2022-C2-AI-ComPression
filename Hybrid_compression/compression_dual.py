@@ -35,21 +35,21 @@ if __name__ == "__main__":
     comp_id,comp_num = 0, 1
     spd_list = []
     collect_line, state = "", ""
-    check_view = True
+
     past_timestamp,interval_time,change_delay_time = 0.0, 0.0, 0.0
 
-    print("process AI start")
+    print("AI_COMPRESSION_PROCESSING_START")
     p1 = Process(target=AI_compression,args=(AI_list,AI_res_list,))
     p1.start()
 
-    print("process alg start")
+    print("AI_COMPRESSION_PROCESSING_START")
     p2 = Process(target=alg_compression,args=(AL_list,AL_res_list,))
     p2.start()
     
-    if check_view:
-        print("viewer start")
-        p3 = Process(target=view,args=(AI_res_list,AL_res_list,now_spd_list,delay_list,))
-        p3.start()
+
+    print("VIEWER_PROCESSING_START")
+    p3 = Process(target=view,args=(AI_res_list,AL_res_list,now_spd_list,delay_list,))
+    p3.start()
 
     for n,l in enumerate(lines,start = 1):
         canid, data_len, timestamp, datafield = split_can_msg(l)
