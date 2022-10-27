@@ -37,13 +37,13 @@
 
 
 
-- 2400개의 CAN 패킷을 파싱하여 Space Savings 결과를 확인한 그래프 
+- 2400개의 CAN 패킷을 파싱하여 Hybrid model로 압축 후 Space Savings 결과를 확인한 그래프 
 
 ![평가지표](README.assets/compression_result.JPG)
 
-- 주행 중 AI 기반 압축 모델을 사용함
-  -  평균 압축률 : 72%
-- 정차 중 Rule 기반 압축 모델 사용함
+- 주행 중 CAN 데이터의 동적 특성에 따라 AI 기반 압축 모델을 사용함
+  -  평균 압축률 : 73%
+- 정차 중 CAN 데이터의 정적 특성에 따라 Rule 기반 압축 모델 사용함
   - 평균 압축률 : 80%
 
 
