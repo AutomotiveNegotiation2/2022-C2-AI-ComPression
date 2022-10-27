@@ -5,9 +5,6 @@ from collections import deque
 import numpy as np
 
 plt.style.use('fivethirtyeight')
-matplotlib.use('TkAgg')
-
-
 
 def view(AI_res_data,AL_res_data,now_spd_list,delay_list):
     # compression result viewer
