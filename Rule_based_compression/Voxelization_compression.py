@@ -20,25 +20,27 @@ def get_argument_parser():
     parser.add_argument('--render_param', type=str, default="rendop.json",
                         help='render_param')
     return parser
+
 if __name__ == "__main__":
-    # get data path 
-    parser = get_argument_parser()
-    FLAGS = parser.parse_args()
-    PCD_DATA_PATH = FLAGS.pcd_data_dir
-    DATA_PATH = FLAGS.img_data_dir
-    CAMERA_PARAM = FLAGS.camera_cali
-    VIEW_RANDER_PARAM = FLAGS.render_param
-    voxel_size_param = FLAGS.voxel_size
-    pcd_data_list = sorted(os.listdir(PCD_DATA_PATH))
-
-    data = [ o3d.io.read_point_cloud( os.path.join(PCD_DATA_PATH,i) ) for i in pcd_data_list if ".pcd" in i]
-    image_list = sorted(os.listdir(DATA_PATH))
-
     count_q = deque([])
     saving_space_q = deque([])
     raw_point_cloud_q = deque([])
     voxel_point_cloud_q = deque([])
     space_saving_means = []
+
+    # get data path 
+    parser = get_argument_parser()
+    args = parser.parse_args()
+    PCD_DATA_PATH = args.pcd_data_dir
+    DATA_PATH = args.img_data_dir
+    CAMERA_PARAM = args.camera_cali
+    VIEW_RANDER_PARAM = args.render_param
+    voxel_size_param = args.voxel_size
+
+    pcd_data_list = sorted(os.listdir(PCD_DATA_PATH))
+
+    data = [ o3d.io.read_point_cloud( os.path.join(PCD_DATA_PATH,i) ) for i in pcd_data_list if ".pcd" in i]
+    image_list = sorted(os.listdir(DATA_PATH))
 
     # animaiton configure
     # vis for origin pcd anmation
@@ -48,7 +50,6 @@ if __name__ == "__main__":
     geometry = o3d.geometry.PointCloud()
     vis.create_window(window_name="RAW_POINT_CLOUD",width=600, height=600)
     vis2.create_window(window_name="VOXEL_POINT_CLOUD",width=600, height=600)
-    
     ctr = vis.get_view_control()
     ctr2 = vis2.get_view_control()
     if os.path.isfile(CAMERA_PARAM) and os.path.isfile(VIEW_RANDER_PARAM):
@@ -59,7 +60,6 @@ if __name__ == "__main__":
 
         param = o3d.io.read_pinhole_camera_parameters(CAMERA_PARAM)
         icp_iteration = len(data)
-        # plt.figure(figsize=(5,5))
         fig,ax = plt.subplots(ncols=1,nrows=3,gridspec_kw={'height_ratios' : [3,1,1]}, figsize=(7,15))
         for j in range(icp_iteration):
             time.sleep(0.001)
@@ -69,12 +69,12 @@ if __name__ == "__main__":
             vis.get_render_option().load_from_json(VIEW_RANDER_PARAM)
             vis.poll_events()
             vis.update_renderer()
-            vis.clear_geometries()  
-            
+            vis.clear_geometries()
+
             # Voxelization
             # parameter : voxel_size  
-
             downpcd = data[j].voxel_down_sample(voxel_size=voxel_size_param)
+
             o3d.io.write_point_cloud("./Down_pcd.pcd",downpcd)
             vis2.add_geometry(downpcd)
             ctr2.convert_from_pinhole_camera_parameters(param)
@@ -91,6 +91,7 @@ if __name__ == "__main__":
             # Space savings 
             space_savings = (1 - (down_pcd_size / origin_pcd_size) )*100
             img_test = img.imread(os.path.join(DATA_PATH,image_list[j]))
+
             count_q.append(j)
             saving_space_q.append(space_savings)
             raw_point_cloud_q.append(len(np.asarray(data[j].points)))
@@ -126,10 +127,12 @@ if __name__ == "__main__":
             ax[2].legend(fontsize = 8)
             ax[2].set(ylabel = "SPACE_SAVINGS(%)",xlabel = "TIME")
             ax[2].set_ylim([60,100])
+            
             plt.tight_layout()
             print(f"Voxel_size : {voxel_size_param}, Space_savings : {str(space_savings)[:5]}, Origin Point number : {len(np.asarray(data[j].points))}, Voxelization Point number : {len(np.asarray(downpcd.points))}")
             space_saving_means.append(space_savings)
             plt.pause(0.001)
+
         vis.destroy_window()
         vis2.destroy_window()
         plt.close()
