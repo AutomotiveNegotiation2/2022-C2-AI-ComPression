@@ -37,7 +37,7 @@ if __name__ == "__main__":
     saving_space_q = deque([])
     raw_point_cloud_q = deque([])
     voxel_point_cloud_q = deque([])
-
+    space_saving_means = []
     # geometry is the point cloud used in your animaiton
     vis = o3d.visualization.Visualizer()
     vis2 = o3d.visualization.Visualizer()
@@ -112,10 +112,13 @@ if __name__ == "__main__":
             ax[2].set(ylabel = "SPACE_SAVINGS(%)",xlabel = "TIME")
             ax[2].set_ylim([60,100])
             plt.tight_layout()
+            print(f"Voxel_size : {voxel_size_param}, Space_savings : {str(space_savings)[:5]}, Origin Point number : {len(np.asarray(data[j].points))}, Voxelization Point number : {len(np.asarray(downpcd.points))}")
+            space_saving_means.append(space_savings)
             plt.pause(0.001)
         vis.destroy_window()
         vis2.destroy_window()
         plt.close()
+        print(f"POIND_CLOUD_SPACE_SAVINGS : {str(np.mean(space_saving_means))[:6] }")
 
         
     else:
