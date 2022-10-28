@@ -10,6 +10,10 @@ import time
 import json
 
 if __name__ == "__main__":
+    # Hybrid parameter 
+    # need hybrid_param.json file in the google drive
+    # hybrid file have Rule based compression param info and AI based compression info
+
     with open("hybrid_param.json") as f:
         hparam = json.load(f)
     data_dir = hparam["data_dir"]
@@ -36,7 +40,12 @@ if __name__ == "__main__":
     spd_list = []
     collect_line, state = "", ""
     past_timestamp,interval_time,change_delay_time,before_timestamp = 0.0, 0.0, 0.0 , 0.0
-
+    # multiprocess start
+    # main process parsing the can DB
+    # classified parsed can data using speed data
+    # if speed over 0 dynamic state -> AI compression process
+    # else static state -> Rule compression process
+    # compression result -> viewer process
     print("process AI start")
     p1 = Process(target=AI_compression,args=(AI_list,AI_res_list,))
     p1.start()
@@ -79,8 +88,14 @@ if __name__ == "__main__":
         before_timestamp = float(timestamp)
 
         if n % 2400 == 0:
+            # can data parsing 2400 packets
+            # it is about 1 second
+
             past_timestamp = float(timestamp)
             time.sleep(2)
+            # not real time
+
+            # classifed based on speed
             if state == "static" and np.mean(spd_list) == 0.0:
                 change_delay_time =0.0
             if state == "dynamic" and np.mean(spd_list) > 0.0:
