@@ -15,6 +15,7 @@ def view(AI_res_data,AL_res_data,now_spd_list,delay_list):
     # delay_list : hybrid model converting delay time ( AI <-> Rule )
     comp_num = 0
     speed_num = 0
+    space_savings =[]
     spd_num_q=deque([])
     spd_q = deque([])
     hybrid_q = deque([])
@@ -29,7 +30,6 @@ def view(AI_res_data,AL_res_data,now_spd_list,delay_list):
         if now_spd_list:
             spd_num_q.append(speed_num)
             spd_q.append( np.mean(now_spd_list[0]) )
-
             if speed_num > 20:
                 spd_num_q.popleft()
                 spd_q.popleft()
@@ -53,7 +53,7 @@ def view(AI_res_data,AL_res_data,now_spd_list,delay_list):
         if AI_res_data and AL_res_data :
             AI_savingspace = AI_res_data[0]
             AL_savingspace = AL_res_data[0]
-            if AI_res_data[0] == "break":
+            if AI_res_data[0][0] == "break" or AL_res_data[0][0] == "break":
                 break
             try:
                 comp_num_q.append(comp_num)
@@ -61,10 +61,11 @@ def view(AI_res_data,AL_res_data,now_spd_list,delay_list):
                 al_saving_space_q.append(AL_savingspace[2])
 
                 delay_time = delay_list[0]
+                print(f"STATE : {AL_savingspace[-1]}",end = ", ")
                 if AL_savingspace[-1] == "dynamic":
                     hybrid_q.append(AI_savingspace[2]-0.05)
+                    space_savings.append(AI_savingspace[2])
                     print("COMP_ID : {0}, METHOD : {1}, SPACE_SAVINGS : {2:2.2f} %, COMPRESSING_TIME : {3:0.4f} sec".format(AI_savingspace[0],AI_savingspace[1],AI_savingspace[2],AI_savingspace[3]))
-
                 else:
                     hybrid_q.append(AL_savingspace[2]-0.07)
                     print("COMP_ID : {0}, METHOD : {1}, SPACE_SAVINGS : {2:2.2f} %, COMPRESSING_TIME : {3:0.4f} sec".format(AL_savingspace[0],AL_savingspace[1],AL_savingspace[2],AL_savingspace[3]))
@@ -103,6 +104,7 @@ def view(AI_res_data,AL_res_data,now_spd_list,delay_list):
                 del AL_res_data[0]
                 comp_num += 1
             except Exception as e:
-                print(f"ERROR_{e}")
-                break 
+                print(f"ERROR_viewer_{e}")
+                break
+    print( f"COMPRESSION_SPACE_SAVINGS : { str(np.mean(space_savings))[:6] }" )
     print("viewer END")
