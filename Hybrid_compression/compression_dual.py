@@ -8,13 +8,23 @@ from utils import *
 from models_torch import *
 import time
 import json
+import argparse
+
+def get_argument_parser():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--hybrid_param_path', type=str, default='hybrid_param.json',
+                        help='hybrid_param_path')
+    return parser
+
 
 if __name__ == "__main__":
     # Hybrid parameter 
     # need hybrid_param.json file in the google drive
     # hybrid file have Rule based compression param info and AI based compression info
+    parser = get_argument_parser()
+    args = parser.parse_args()
 
-    with open("hybrid_param.json") as f:
+    with open(args.hybrid_param_path) as f:
         hparam = json.load(f)
     data_dir = hparam["data_dir"]
     speed_can_id = hparam ["speed_can_id"]
