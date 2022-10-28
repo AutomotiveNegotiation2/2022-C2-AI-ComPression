@@ -76,6 +76,8 @@ def compress(dparam,model, X, Y, bs, vocab_size, timesteps, device, final_step=F
 
 def AI_compression(AI_data,res):
     # AI compression based Dzip
+    # using biGRU model
+    # hyper parameter is in dzip_param.json
     with open("dzip_param.json") as f:
         dparam = json.load(f)
     use_cuda = dparam["use_cuda"] and torch.cuda.is_available()
