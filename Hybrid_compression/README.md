@@ -61,7 +61,7 @@
 
 
 
-## How to Start
+## How to Setup
 
 - 글로벌 환경 세팅
 
@@ -76,6 +76,24 @@ bash setup.sh
 ```
 bash docker_setup.sh
 ```
+
+
+
+## How to Use
+
+
+
+### Data compression
+
+- bash 실행
+
+```
+bash CAN_COMPRESSION.sh
+```
+
+
+
+
 
 
 
