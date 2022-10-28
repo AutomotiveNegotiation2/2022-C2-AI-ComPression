@@ -21,6 +21,7 @@ def get_argument_parser():
                         help='render_param')
     return parser
 if __name__ == "__main__":
+    # get data path 
     parser = get_argument_parser()
     FLAGS = parser.parse_args()
     PCD_DATA_PATH = FLAGS.pcd_data_dir
@@ -38,7 +39,10 @@ if __name__ == "__main__":
     raw_point_cloud_q = deque([])
     voxel_point_cloud_q = deque([])
     space_saving_means = []
-    # geometry is the point cloud used in your animaiton
+
+    # animaiton configure
+    # vis for origin pcd anmation
+    # vis2 for voxelization pcd animation
     vis = o3d.visualization.Visualizer()
     vis2 = o3d.visualization.Visualizer()
     geometry = o3d.geometry.PointCloud()
@@ -48,6 +52,9 @@ if __name__ == "__main__":
     ctr = vis.get_view_control()
     ctr2 = vis2.get_view_control()
     if os.path.isfile(CAMERA_PARAM) and os.path.isfile(VIEW_RANDER_PARAM):
+        # point cloud animation setup 
+        # camera view : CAMERA_PARAM
+        # background setting : VIEW_RENDER_PARAM
         print("LOAD_CAMERA_CONFIG_AND_RENDERING_OPT")
 
         param = o3d.io.read_pinhole_camera_parameters(CAMERA_PARAM)
@@ -62,9 +69,11 @@ if __name__ == "__main__":
             vis.get_render_option().load_from_json(VIEW_RANDER_PARAM)
             vis.poll_events()
             vis.update_renderer()
-            vis.clear_geometries()
-            #vis.remove_geometry(data[j])
+            vis.clear_geometries()  
             
+            # Voxelization
+            # parameter : voxel_size  
+
             downpcd = data[j].voxel_down_sample(voxel_size=voxel_size_param)
             o3d.io.write_point_cloud("./Down_pcd.pcd",downpcd)
             vis2.add_geometry(downpcd)
@@ -73,11 +82,13 @@ if __name__ == "__main__":
             vis2.poll_events()
             vis2.update_renderer()
             vis2.clear_geometries()
+
+
             origin_pcd_size = os.path.getsize( os.path.join(PCD_DATA_PATH,pcd_data_list[j]))
             down_pcd_size = os.path.getsize("./Down_pcd.pcd")
             if os.path.exists("./Down_pcd.pcd"):
                 os.remove("./Down_pcd.pcd")
-
+            # Space savings 
             space_savings = (1 - (down_pcd_size / origin_pcd_size) )*100
             img_test = img.imread(os.path.join(DATA_PATH,image_list[j]))
             count_q.append(j)
@@ -91,6 +102,10 @@ if __name__ == "__main__":
                 raw_point_cloud_q.popleft()
                 voxel_point_cloud_q.popleft()
 
+            # make multi plot
+            # 0 : image
+            # 1 : point cloud count
+            # 2 : space savings
             
             ax[0].cla()
             ax[0].text(1200.0,0.0,"Space_savings : " + str(space_savings)[:5]+"%")
