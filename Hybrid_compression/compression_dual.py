@@ -36,13 +36,8 @@ if __name__ == "__main__":
     parser = get_argument_parser()
     args = parser.parse_args()
     if os.path.isfile(args.hybrid_param_path):
-
         with open(args.hybrid_param_path) as f:
             hparam = json.load(f)
-        data_dir = hparam["data_dir"]
-        speed_can_id = hparam ["speed_can_id"]
-        speed_can_datafield_area =hparam ["speed_can_datafield_area"]
-        lines = read_data(data_dir)
     else:
         print(f"CHECK_PARAMETER_PATH : {args.hybrid_param_path}")
 
@@ -54,8 +49,6 @@ if __name__ == "__main__":
         elif not os.path.isfile(hparam["AI_param"]):
             print("CHECK_AI_COMPRESSION_PARAMETER_FILE")
     
-
-
     # multiprocess start
     # main process parsing the can DB
     # classified parsed can data using speed data
@@ -74,55 +67,46 @@ if __name__ == "__main__":
     p3 = Process(target=view,args=(AI_res_list,AL_res_list,now_spd_list,delay_list,))
     p3.start()
     
-    for n,l in enumerate(lines,start = 1):
+    for n,l in enumerate(read_data(hparam["data_dir"]),start = 1):
         canid, data_len, timestamp, datafield = split_can_msg(l)
-
         if n == 1:
             past_timestamp = float(timestamp)
-            
-
-        interval_time = round(float(timestamp) - past_timestamp,2)
+        delta_timestamp = str(round(float(timestamp) - past_timestamp,2))
         delay_time = round(float(timestamp) - before_timestamp,2) 
-        delta_timestamp = str(interval_time)
 
         if len(delta_timestamp) != 5:
             delta_timestamp = "0"*(5 - len(delta_timestamp) ) + delta_timestamp
         can_msg = [ delta_timestamp, canid, data_len] + datafield
-        str_can_msg = " ".join(can_msg) + " \n"
-        collect_line += str_can_msg
+        collect_line += (" ".join(can_msg) + " \n")
         
-        if int(canid,16) == speed_can_id:
+        if int(canid,16) == hparam ["speed_can_id"]:
             # Need CAN speed id and datafield area info
-            spd = int(datafield[speed_can_datafield_area],16)
+            spd = int(datafield[hparam ["speed_can_datafield_area"]],16)
             spd_list.append(spd)
 
-        if state == "dynamic" and spd == 0.0:
+        if (state == "dynamic" and spd == 0.0) or (state == "static" and spd > 0.0):
             change_delay_time += delay_time
-        if state == "static" and spd > 0.0:        
-            change_delay_time += delay_time
+
 
         before_timestamp = float(timestamp)
 
         if n % 2400 == 0:
             # can data parsing 2400 packets
             # it is about 1 second
-
-            past_timestamp = float(timestamp)
+            
             time.sleep(2)
             # not real time
-
             # classifed based on speed
-            if state == "static" and np.mean(spd_list) == 0.0:
+            if (state == "static" and np.mean(spd_list) == 0.0) or (state == "dynamic" and np.mean(spd_list) > 0.0):
                 change_delay_time =0.0
-            if state == "dynamic" and np.mean(spd_list) > 0.0:
-                change_delay_time = 0.0
             
-            delay_list.append(change_delay_time )
+            delay_list.append(change_delay_time)
             state = preprocessing(spd_list)
             AI_list.append([collect_line, comp_id,state])
             AL_list.append([collect_line, comp_id,state])
             now_spd_list.append(spd_list)
-
+            
+            past_timestamp = float(timestamp)
             spd_list = []
             comp_id +=1
             collect_line = ""
