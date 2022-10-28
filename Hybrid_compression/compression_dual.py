@@ -92,7 +92,7 @@ if __name__ == "__main__":
             AI_list.append([collect_line,comp_id,state])
             AL_list.append([collect_line, comp_id,state])
             now_spd_list.append(spd_list)
-            print(f"NOW_CAR_VELOCITY : { str(np.mean(spd_list))[:5]}, AI_BASED_COMPRESSION_QUEUE : {len(AI_list)}, RULE_BASED_COMPRESSION_QUEUE : {len(AL_list)}")
+            #print(f"NOW_CAR_VELOCITY : { str(np.mean(spd_list))[:5]}, AI_BASED_COMPRESSION_QUEUE : {len(AI_list)}, RULE_BASED_COMPRESSION_QUEUE : {len(AL_list)}")
             spd_list = []
             comp_id +=1
             collect_line = ""
