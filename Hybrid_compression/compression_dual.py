@@ -18,6 +18,18 @@ def get_argument_parser():
 
 
 if __name__ == "__main__":
+
+    manager = Manager()
+    AI_list = manager.list()
+    AL_list = manager.list()
+    AI_res_list = manager.list()
+    AL_res_list = manager.list()
+    now_spd_list = manager.list()
+    delay_list = manager.list()
+    comp_id,comp_num = 0, 1
+    spd_list = []
+    collect_line, state = "", ""
+    past_timestamp,interval_time,change_delay_time,before_timestamp = 0.0, 0.0, 0.0 , 0.0
     # Hybrid parameter 
     # need hybrid_param.json file in the google drive
     # hybrid file have Rule based compression param info and AI based compression info
@@ -30,6 +42,7 @@ if __name__ == "__main__":
         data_dir = hparam["data_dir"]
         speed_can_id = hparam ["speed_can_id"]
         speed_can_datafield_area =hparam ["speed_can_datafield_area"]
+        lines = read_data(data_dir)
     else:
         print(f"CHECK_PARAMETER_PATH : {args.hybrid_param_path}")
 
@@ -40,19 +53,9 @@ if __name__ == "__main__":
             print("CHECK_RULE_COMPRESSION_PARAMETER_FILE")
         elif not os.path.isfile(hparam["AI_param"]):
             print("CHECK_AI_COMPRESSION_PARAMETER_FILE")
-  
-    lines = read_data(data_dir)
-    manager = Manager()
-    AI_list = manager.list()
-    AL_list = manager.list()
-    AI_res_list = manager.list()
-    AL_res_list = manager.list()
-    now_spd_list = manager.list()
-    delay_list = manager.list()
-    comp_id,comp_num = 0, 1
-    spd_list = []
-    collect_line, state = "", ""
-    past_timestamp,interval_time,change_delay_time,before_timestamp = 0.0, 0.0, 0.0 , 0.0
+    
+
+
     # multiprocess start
     # main process parsing the can DB
     # classified parsed can data using speed data
@@ -70,7 +73,7 @@ if __name__ == "__main__":
     print("viewer start")
     p3 = Process(target=view,args=(AI_res_list,AL_res_list,now_spd_list,delay_list,))
     p3.start()
-
+    
     for n,l in enumerate(lines,start = 1):
         canid, data_len, timestamp, datafield = split_can_msg(l)
 
