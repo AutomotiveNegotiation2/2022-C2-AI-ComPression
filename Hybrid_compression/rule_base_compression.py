@@ -11,9 +11,9 @@ def alg_compression(alg_data,res):
             try:
                 com_data = alg_data[0][0]
             except Exception as e:
-                print(f"ERROR_{e}")
+                print(f"ERROR_rule_{e}")
                 break
-            if com_data[0] == "break":
+            if com_data == "break":
                 break
             start = time.time()
             before_sum = len(com_data)
@@ -27,5 +27,5 @@ def alg_compression(alg_data,res):
             # else:
             res.append([alg_data[0][1],"RULE",saving_space,time.time() - start, alg_data[0][2]])
             del alg_data[0]
-            
+        
     print("alg compress END")
