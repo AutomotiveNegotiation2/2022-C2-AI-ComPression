@@ -18,7 +18,6 @@ def get_argument_parser():
 
 
 if __name__ == "__main__":
-
     manager = Manager()
     AI_list = manager.list()
     AL_list = manager.list()
@@ -69,10 +68,12 @@ if __name__ == "__main__":
     
     for n,l in enumerate(read_data(hparam["data_dir"]),start = 1):
         canid, data_len, timestamp, datafield = split_can_msg(l)
+
         if n == 1:
             past_timestamp = float(timestamp)
         delta_timestamp = str(round(float(timestamp) - past_timestamp,2))
         delay_time = round(float(timestamp) - before_timestamp,2) 
+        before_timestamp = float(timestamp)
 
         if len(delta_timestamp) != 5:
             delta_timestamp = "0"*(5 - len(delta_timestamp) ) + delta_timestamp
@@ -86,10 +87,7 @@ if __name__ == "__main__":
 
         if (state == "dynamic" and spd == 0.0) or (state == "static" and spd > 0.0):
             change_delay_time += delay_time
-
-
-        before_timestamp = float(timestamp)
-
+        
         if n % 2400 == 0:
             # can data parsing 2400 packets
             # it is about 1 second
@@ -105,8 +103,8 @@ if __name__ == "__main__":
             AI_list.append([collect_line, comp_id,state])
             AL_list.append([collect_line, comp_id,state])
             now_spd_list.append(spd_list)
-            
             past_timestamp = float(timestamp)
+
             spd_list = []
             comp_id +=1
             collect_line = ""
@@ -116,6 +114,7 @@ if __name__ == "__main__":
     AL_list.append(["break"])
     AI_res_list.append(["break"])
     AL_res_list.append(["break"])
+
     p1.join()
     p2.join()
     p3.join()
