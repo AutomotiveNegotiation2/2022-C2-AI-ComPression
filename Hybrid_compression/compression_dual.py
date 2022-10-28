@@ -23,12 +23,15 @@ if __name__ == "__main__":
     # hybrid file have Rule based compression param info and AI based compression info
     parser = get_argument_parser()
     args = parser.parse_args()
+    if os.path.isfile(args.hybrid_param_path):
 
-    with open(args.hybrid_param_path) as f:
-        hparam = json.load(f)
-    data_dir = hparam["data_dir"]
-    speed_can_id = hparam ["speed_can_id"]
-    speed_can_datafield_area =hparam ["speed_can_datafield_area"]
+        with open(args.hybrid_param_path) as f:
+            hparam = json.load(f)
+        data_dir = hparam["data_dir"]
+        speed_can_id = hparam ["speed_can_id"]
+        speed_can_datafield_area =hparam ["speed_can_datafield_area"]
+    else:
+        print(f"CHECK_PARAMETER_PATH : {args.hybrid_param_path}")
 
     if os.path.isfile(hparam["RULE_param"]) and os.path.isfile(hparam["AI_param"]):
         print("COMPRESSION_PARAMETER_FILE_LOAD")
