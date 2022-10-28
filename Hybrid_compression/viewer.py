@@ -56,51 +56,53 @@ def view(AI_res_data,AL_res_data,now_spd_list,delay_list):
             if AI_res_data[0] == "break":
                 break
             try:
-                print("COMP_ID : {0}, METHOD : {1}, SPACE_SAVINGS : {2:2.2f} %, COMPRESSING_TIME : {3:0.4f} sec".format(AI_savingspace[0],AI_savingspace[1],AI_savingspace[2],AI_savingspace[3]))
-                print("COMP_ID : {0}, METHOD : {1}, SPACE_SAVINGS : {2:2.2f} %, COMPRESSING_TIME : {3:0.4f} sec".format(AL_savingspace[0],AL_savingspace[1],AL_savingspace[2],AL_savingspace[3]))
+                comp_num_q.append(comp_num)
+                ai_saving_space_q.append(AI_savingspace[2])
+                al_saving_space_q.append(AL_savingspace[2])
+
+                delay_time = delay_list[0]
+                if AL_savingspace[-1] == "dynamic":
+                    hybrid_q.append(AI_savingspace[2]-0.05)
+                    print("COMP_ID : {0}, METHOD : {1}, SPACE_SAVINGS : {2:2.2f} %, COMPRESSING_TIME : {3:0.4f} sec".format(AI_savingspace[0],AI_savingspace[1],AI_savingspace[2],AI_savingspace[3]))
+
+                else:
+                    hybrid_q.append(AL_savingspace[2]-0.07)
+                    print("COMP_ID : {0}, METHOD : {1}, SPACE_SAVINGS : {2:2.2f} %, COMPRESSING_TIME : {3:0.4f} sec".format(AL_savingspace[0],AL_savingspace[1],AL_savingspace[2],AL_savingspace[3]))
+
+                if comp_num > 20:
+                    comp_num_q.popleft()
+                    ai_saving_space_q.popleft()
+                    al_saving_space_q.popleft()
+                    hybrid_q.popleft()
+
+                ax[0].cla()
+                ax[0].plot(comp_num_q,ai_saving_space_q,label = f"AI : {str(np.mean(ai_saving_space_q))[:4] } %",color = "red",linewidth = 2)
+                ax[0].plot(comp_num_q,al_saving_space_q,label = f"RULE : {str(np.mean(al_saving_space_q))[:4] } %", color = "green",linewidth = 2)
+                ax[0].plot(comp_num_q,hybrid_q,label = f"HYBRID : {str(np.mean(hybrid_q))[:4] } %", color = "blue",linewidth = 3)
+                ax[0].text(comp_num_q[-1],ai_saving_space_q[-1],str(AI_savingspace[2])[:4] + "%",color = "red", fontsize = 10)
+                ax[0].text(comp_num_q[-1],al_saving_space_q[-1],str(AL_savingspace[2])[:4] + "%",color = "green",fontsize = 10)
+
+                if (delay_time > 0.0):
+                    delay_num = comp_num_q[-1]
+                    delay_num_diff = delay_num - delay_time*0.001
+                if delay_num in comp_num_q:
+                    ax[0].axvspan(delay_num_diff, delay_num)
+                    ax[0].text(delay_num,75.0,"delay_time\n"+str( (delay_num - delay_num_diff)*1000 )[:3] + "[msec]",color = "blue",fontsize = 10)
+                ax[0].set_title("COMPRESSION GRAPH")
+                ax[0].legend(fontsize = 12)
+                
+                ax[0].set(ylabel = "SPACE_SAVINGS(%)",xlabel = "COMPRESS TIME(SEC)")
+                if comp_num_q:
+                    ax[0].set_xlim([comp_num_q[0],comp_num_q[-1]+1])
+                    ax[0].set_ylim([70,85])
+                    ax[0].set_xticks( range(comp_num_q[0],comp_num_q[-1]+1))
+                plt.tight_layout()
+                plt.pause(0.0001)
+                del delay_list[0]
+                del AI_res_data[0]
+                del AL_res_data[0]
+                comp_num += 1
             except Exception as e:
                 print(f"ERROR_{e}")
-                break    
-            comp_num_q.append(comp_num)
-            ai_saving_space_q.append(AI_savingspace[2])
-            al_saving_space_q.append(AL_savingspace[2])
-
-            delay_time = delay_list[0]
-            if AL_savingspace[-1] == "dynamic":
-                hybrid_q.append(AI_savingspace[2]-0.05)
-            else:
-                hybrid_q.append(AL_savingspace[2]-0.07)
-            if comp_num > 20:
-                comp_num_q.popleft()
-                ai_saving_space_q.popleft()
-                al_saving_space_q.popleft()
-                hybrid_q.popleft()
-
-            ax[0].cla()
-            ax[0].plot(comp_num_q,ai_saving_space_q,label = f"AI : {str(np.mean(ai_saving_space_q))[:4] } %",color = "red",linewidth = 2)
-            ax[0].plot(comp_num_q,al_saving_space_q,label = f"RULE : {str(np.mean(al_saving_space_q))[:4] } %", color = "green",linewidth = 2)
-            ax[0].plot(comp_num_q,hybrid_q,label = f"HYBRID : {str(np.mean(hybrid_q))[:4] } %", color = "blue",linewidth = 3)
-            ax[0].text(comp_num_q[-1],ai_saving_space_q[-1],str(AI_savingspace[2])[:4] + "%",color = "red", fontsize = 10)
-            ax[0].text(comp_num_q[-1],al_saving_space_q[-1],str(AL_savingspace[2])[:4] + "%",color = "green",fontsize = 10)
-
-            if (delay_time > 0.0):
-                delay_num = comp_num_q[-1]
-                delay_num_diff = delay_num - delay_time*0.001
-            if delay_num in comp_num_q:
-                ax[0].axvspan(delay_num_diff, delay_num)
-                ax[0].text(delay_num,75.0,"delay_time\n"+str( (delay_num - delay_num_diff)*1000 )[:3] + "[msec]",color = "blue",fontsize = 10)
-            ax[0].set_title("COMPRESSION GRAPH")
-            ax[0].legend(fontsize = 12)
-            
-            ax[0].set(ylabel = "SPACE_SAVINGS(%)",xlabel = "COMPRESS TIME(SEC)")
-            if comp_num_q:
-                ax[0].set_xlim([comp_num_q[0],comp_num_q[-1]+1])
-                ax[0].set_ylim([70,85])
-                ax[0].set_xticks( range(comp_num_q[0],comp_num_q[-1]+1))
-            plt.tight_layout()
-            plt.pause(0.0001)
-            del delay_list[0]
-            del AI_res_data[0]
-            del AL_res_data[0]
-            comp_num += 1
+                break 
     print("viewer END")
