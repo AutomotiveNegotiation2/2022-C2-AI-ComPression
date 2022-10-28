@@ -8,16 +8,9 @@ from utils import *
 from models_torch import *
 import time
 import json
-import argparse
-def get_argument_parser():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--hybrid_param_dir', type=str, default="hybrid_param.json",
-                        help='hybrid_param_dir')
-    return parser
+
 if __name__ == "__main__":
-    parser = get_argument_parser()
-    args = parser.parse_args()
-    with open(args.hybrid_param_dir) as f:
+    with open("hybrid_param.json") as f:
         hparam = json.load(f)
     data_dir = hparam["data_dir"]
     speed_can_id = hparam ["speed_can_id"]
@@ -42,19 +35,17 @@ if __name__ == "__main__":
     comp_id,comp_num = 0, 1
     spd_list = []
     collect_line, state = "", ""
+    past_timestamp,interval_time,change_delay_time,before_timestamp = 0.0, 0.0, 0.0 , 0.0
 
-    past_timestamp,interval_time,change_delay_time = 0.0, 0.0, 0.0
-
-    print("AI_COMPRESSION_PROCESSING_START")
+    print("process AI start")
     p1 = Process(target=AI_compression,args=(AI_list,AI_res_list,))
     p1.start()
 
-    print("AI_COMPRESSION_PROCESSING_START")
+    print("process alg start")
     p2 = Process(target=alg_compression,args=(AL_list,AL_res_list,))
     p2.start()
-    
 
-    print("VIEWER_PROCESSING_START")
+    print("viewer start")
     p3 = Process(target=view,args=(AI_res_list,AL_res_list,now_spd_list,delay_list,))
     p3.start()
 
@@ -63,22 +54,29 @@ if __name__ == "__main__":
 
         if n == 1:
             past_timestamp = float(timestamp)
-        delta_timestamp = str(round(float(timestamp) - past_timestamp,2))
+            
+
+        interval_time = round(float(timestamp) - past_timestamp,2)
+        delay_time = round(float(timestamp) - before_timestamp,2) 
+        delta_timestamp = str(interval_time)
+
         if len(delta_timestamp) != 5:
             delta_timestamp = "0"*(5 - len(delta_timestamp) ) + delta_timestamp
         can_msg = [ delta_timestamp, canid, data_len] + datafield
         str_can_msg = " ".join(can_msg) + " \n"
         collect_line += str_can_msg
-
+        
         if int(canid,16) == speed_can_id:
             # Need CAN speed id and datafield area info
             spd = int(datafield[speed_can_datafield_area],16)
             spd_list.append(spd)
 
         if state == "dynamic" and spd == 0.0:
-            change_delay_time += interval_time
+            change_delay_time += delay_time
         if state == "static" and spd > 0.0:        
-            change_delay_time += interval_time
+            change_delay_time += delay_time
+
+        before_timestamp = float(timestamp)
 
         if n % 2400 == 0:
             past_timestamp = float(timestamp)
@@ -87,12 +85,13 @@ if __name__ == "__main__":
                 change_delay_time =0.0
             if state == "dynamic" and np.mean(spd_list) > 0.0:
                 change_delay_time = 0.0
-            delay_list.append(change_delay_time)
+            
+            delay_list.append(change_delay_time )
             state = preprocessing(spd_list)
-            AI_list.append([collect_line,comp_id,state])
+            AI_list.append([collect_line, comp_id,state])
             AL_list.append([collect_line, comp_id,state])
             now_spd_list.append(spd_list)
-            #print(f"NOW_CAR_VELOCITY : { str(np.mean(spd_list))[:5]}, AI_BASED_COMPRESSION_QUEUE : {len(AI_list)}, RULE_BASED_COMPRESSION_QUEUE : {len(AL_list)}")
+
             spd_list = []
             comp_id +=1
             collect_line = ""
@@ -102,7 +101,7 @@ if __name__ == "__main__":
     AL_list.append(["break"])
     AI_res_list.append(["break"])
     AL_res_list.append(["break"])
-
+    p1.join()
     p2.join()
     p3.join()
 
