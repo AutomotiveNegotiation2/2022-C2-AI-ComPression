@@ -61,6 +61,24 @@
 
 
 
+## How to Start
+
+- 글로벌 환경 세팅
+
+```
+bash setup.sh
+```
+
+
+
+- 도커 환경 세팅
+
+```
+bash docker_setup.sh
+```
+
+
+
 
 
 **CITE**
