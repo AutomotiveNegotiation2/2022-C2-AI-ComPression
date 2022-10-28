@@ -109,10 +109,11 @@ def AI_compression(AI_data,res):
             try:
                 com_data = AI_data[0][0]
             except Exception as e:
-                print(f"ERROR_{e}")
+                print(f"ERROR_AI_{e}")
                 break
             if com_data == "break":
                 break
+
             com_data = bytes(com_data,encoding = "utf-8")
             start_time = time.time()
             before_size_ai = len(com_data)
