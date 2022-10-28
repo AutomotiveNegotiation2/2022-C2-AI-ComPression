@@ -6,6 +6,7 @@ sudo apt-get install bc -y
 sudo apt-get install python3-pip -y
 sudo apt-get install wget -y
 sudo apt-get install python3-tk -y
+sudo apt-get install curl -y
 
 python3 -m pip install --upgrade pip
 python3 -m pip install --upgrade Pillow
