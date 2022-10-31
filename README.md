@@ -46,6 +46,11 @@
 
 
 - 정차 상황에서 룰셋 기반 압축의 성능(Space savings)은 주행 상황보다 높으며, AI 기반 압축 모델은 정차 및 주행 상황 모두에서 압축 성능이 뛰어남. 
+- CAR HACKING: ATTACK & DEFENSE CHALLENGE 2020 데이터를 활용하여 압축함.
+
+  - 주행 상황 : 12.9 MB
+  - 정차 상황 : 12.3 MB
+
 
 
 
