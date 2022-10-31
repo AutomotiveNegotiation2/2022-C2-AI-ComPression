@@ -18,8 +18,13 @@
 ### Compression Code Description
 
 - **AI_based_compression** : biGRU 기반 AI 압축 모델(Dzip)
+  - 압축 성능이 좋으나 실시간 압축 불가 -> 하이브리드 압축 모델로 압축 방식 개선
+
 - **Rule_based_compression** : 복셀라이제이션 기반 압축 모델
+  - PCD 데이터 압축 방식 고도화 예정
+
 - **Hybrid_compression** : Rule and AI 기반 압축 모델
+  - 실시간 압축 및 압축률 개선을 목표로 모듈 고도화 예정
 
 ---
 
@@ -54,7 +59,7 @@
 
 
 
-- **하이브리드 기반 압축 모듈 성능 평가** 
+- **하이브리드 기반 압축 모듈 성능 평가**
 
 ![평가지표](README.assets/compression_result-16671826965171.JPG)
 
