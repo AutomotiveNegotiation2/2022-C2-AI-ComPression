@@ -12,7 +12,6 @@
 - Compression Code
   - AI_based_compression
   - Rule_based_compression
-  - Hybrid_compression
 
 
 ### Compression Code Description
@@ -23,8 +22,6 @@
 - **Rule_based_compression** : 복셀라이제이션 기반 압축 모델
   - PCD 데이터 압축 방식 고도화 예정
 
-- **Hybrid_compression** : Rule and AI 기반 압축 모델
-  - 실시간 압축 및 압축률 개선을 목표로 모듈 고도화 예정
 
 ---
 
@@ -57,19 +54,6 @@
   - 정차 상황 : 12.3 MB
 
 
-
-
-- **하이브리드 기반 압축 모듈 성능 평가**
-
-![평가지표](README.assets/compression_result-16671826965171.JPG)
-
-- 활용 데이터 : 아반떼에서 수집한 C-CAN 데이터 중 2400개의 CAN 패킷(87KB)을 파싱하여 압축함.
-
-  - 주행 중 CAN 데이터의 동적 특성에 따라 AI 기반 압축 모델을 사용함
-    -  평균 압축률 : 73%
-
-  - 정차 중 CAN 데이터의 정적 특성에 따라 Rule 기반 압축 모델 사용함
-    - 평균 압축률 : 80%
 
 
 
