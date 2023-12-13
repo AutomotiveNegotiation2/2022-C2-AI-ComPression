@@ -17,7 +17,7 @@ file_name = args.file_name
 unit_lines = 24
 # CAN 데이터 기준 timmstamp 2400 개가 1000 ms
 # 최소 주기는 10 ms 로 24개 정도 나옴
-
+# CANFD  데이터 기준 1800개 정도 1000ms
 f = open(file_name,"r")
 line_datas = f.readlines()
 f.close()

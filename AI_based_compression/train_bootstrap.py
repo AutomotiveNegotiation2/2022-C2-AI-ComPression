@@ -17,11 +17,7 @@ torch.backends.cudnn.benchmark = False
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 
 def weight_init(m):
-    '''
-    Usage:
-        model = Model()
-        model.apply(weight_init)
-    '''
+
     if isinstance(m, nn.Linear):
         init.xavier_normal_(m.weight.data)
         init.zeros_(m.bias.data)
