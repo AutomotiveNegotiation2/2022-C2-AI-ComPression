@@ -15,7 +15,7 @@ args = parser.parse_args()
 file_name = args.file_name
 
 unit_lines = 24
-# timmstamp 2400 개가 1000 ms
+# CAN 데이터 기준 timmstamp 2400 개가 1000 ms
 # 최소 주기는 10 ms 로 24개 정도 나옴
 
 f = open(file_name,"r")
