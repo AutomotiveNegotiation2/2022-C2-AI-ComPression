@@ -68,13 +68,15 @@
 
 
 ## Data open
+![](README.assets/data_img.PNG)
+
 - DEM(Driving Environment Monitoring) 메시지, CAM(이미지) 데이터, CANFD, GPS 데이터로 구성되어 있음
 - 1초마다 생성된 데이터를 파싱하여 년월일_시분초_미리초 디렉토리에 저장함
 - 파싱된 데이터 내용
- - CAM : 차량 상단에 설치된 전후좌우 카메라 데이터(1 Hz)
- - CAN : 차량에서 생성된 CANFD 데이터 (1초 동안 수집)
- - DEM : 차량에서 생성된 DEM 데이터 (10Hz)
- - GPS : 차량에 설치된 GPS에서 생성된 데이터(10Hz)
+- CAM : 차량 상단에 설치된 전후좌우 카메라 데이터(1 Hz)
+- CAN : 차량에서 생성된 CANFD 데이터 (1초 동안 수집)
+- DEM : 차량에서 생성된 DEM 데이터 (10Hz)
+- GPS : 차량에 설치된 GPS에서 생성된 데이터(10Hz)
 
 링크 : https://drive.google.com/drive/folders/1eHA4Y8LepUrlAJCojASYY52QQPSNrpHZ?usp=drive_link
 
