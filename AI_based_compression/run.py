@@ -24,7 +24,6 @@ with open(input_file, 'rb') as fp:#, encoding='latin-1') as fp:
 print("Seq Length {}".format(len(data)))
 vals = list(set(data))
 vals.sort()
-# print(vals)
 
 char2id_dict = {c: i for (i,c) in enumerate(vals)}
 id2char_dict = {i: c for (i,c) in enumerate(vals)}
@@ -33,8 +32,6 @@ params = {'char2id_dict':char2id_dict, 'id2char_dict':id2char_dict}
 with open(param_file, 'w') as f:
     json.dump(params, f, indent=4)
 
-# print(char2id_dict)
-# print(id2char_dict)
 
 out = [char2id_dict[c] for c in data]
 integer_encoded = np.array(out)
