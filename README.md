@@ -70,6 +70,10 @@
 ## Data open
 ![](README.assets/data_img.PNG)
 
+- 상용차
+- GPS : 1
+- CAMERA : 4
+- CANFD : Chassis
 - DEM(Driving Environment Monitoring) 메시지, CAM(이미지) 데이터, CANFD, GPS 데이터로 구성되어 있음
 - 1초마다 생성된 데이터를 파싱하여 년월일_시분초_미리초 디렉토리에 저장함
 - 디렉토리 내용 설명
