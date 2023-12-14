@@ -143,5 +143,6 @@ if __name__ == "__main__":
         if not os.path.isfile(CAMERA_PARAM):
             print("CHECK_CAMERA_CONFIG")
         else:
-            print("CHECK_RENDERING_OPT")
+            print("CHECK_RENDERING_OPT ")
+            
         
