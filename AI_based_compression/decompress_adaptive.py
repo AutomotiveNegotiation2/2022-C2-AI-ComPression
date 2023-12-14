@@ -25,10 +25,10 @@ def loss_function(pred, target):
     loss = 1/np.log(2) * F.nll_loss(pred, target)
     return loss
 
-def decompress(model, len_series, bs, voc_sz, timesteps, device, optimizer, scheduler, final_step=False):
+def decompress(model, len_ser, bs, voc_sz, timesteps, device, optimizer, scheduler, final_step=False):
     
     if not final_step:
-        num_iters = len_series // bs
+        num_iters = len_ser // bs
         print(num_iters)
         series_2d = np.zeros((bs,num_iters), dtype = np.uint8).astype('int')
         ind = np.array(range(bs))*num_iters
@@ -101,7 +101,7 @@ def decompress(model, len_series, bs, voc_sz, timesteps, device, optimizer, sche
         return series_2d.reshape(-1)
     
     else:
-        series = np.zeros(len_series, dtype = np.uint8).astype('int')
+        series = np.zeros(len_ser, dtype = np.uint8).astype('int')
         f = open(FLAGS.temp_file_prefix+'.last','rb')
         bitin = arithmeticcoding_fast.BitInputStream(f)
         dec = arithmeticcoding_fast.ArithmeticDecoder(32, bitin)
@@ -109,9 +109,9 @@ def decompress(model, len_series, bs, voc_sz, timesteps, device, optimizer, sche
         cumul = np.zeros(voc_sz+1, dtype = np.uint64)
         cumul[1:] = np.cumsum(prob*10000000 + 1)        
 
-        for j in range(min(timesteps,len_series)):
+        for j in range(min(timesteps,len_ser)):
             series[j] = dec.read(cumul, voc_sz)
-        for i in range(len_series-timesteps):
+        for i in range(len_ser-timesteps):
             bx = Variable(torch.from_numpy(series[i:i+timesteps].reshape(1,-1))).to(device)
             with torch.no_grad():
                 model.eval()
@@ -165,7 +165,7 @@ def main():
 
     batch_size = params['bs']
     timesteps = params['timesteps']
-    len_series = params['len_series']
+    len_ser = params['len_ser']
     id2char_dict = params['id2char_dict']
     voc_sz = len(id2char_dict)
 
@@ -188,7 +188,7 @@ def main():
     device = torch.device("cuda" if use_cuda else "cpu")
     print("Using device {}".format(device))
 
-    series = np.zeros(len_series,dtype=np.uint8)
+    series = np.zeros(len_ser,dtype=np.uint8)
 
     bsdic = {'voc_sz': voc_sz, 'emb_size': 8,
         'length': timesteps, 'jump': 16,
@@ -243,8 +243,8 @@ def main():
     l = int(len(series)/batch_size)*batch_size
     
     series[:l] = decompress(commodel, l, batch_size, voc_sz, timesteps, device, optimizer, scheduler)
-    if l < len_series - timesteps:
-        series[l:] = decompress(commodel, len_series-l, 1, voc_sz, timesteps, device, optimizer, scheduler, final_step = True)
+    if l < len_ser - timesteps:
+        series[l:] = decompress(commodel, len_ser-l, 1, voc_sz, timesteps, device, optimizer, scheduler, final_step = True)
     else:
         f = open(FLAGS.temp_file_prefix+'.last','rb')
         bitin = arithmeticcoding_fast.BitInputStream(f)
@@ -253,7 +253,7 @@ def main():
         
         cumul = np.zeros(voc_sz+1, dtype = np.uint64)
         cumul[1:] = np.cumsum(prob*10000000 + 1)        
-        for j in range(l, len_series):
+        for j in range(l, len_ser):
             series[j] = dec.read(cumul, voc_sz)
         
         bitin.close() 
