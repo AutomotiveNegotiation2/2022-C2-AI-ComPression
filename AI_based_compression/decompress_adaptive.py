@@ -25,7 +25,7 @@ def loss_function(pred, target):
     loss = 1/np.log(2) * F.nll_loss(pred, target)
     return loss
 
-def decompress(model, len_series, bs, vocab_size, timesteps, device, optimizer, scheduler, final_step=False):
+def decompress(model, len_series, bs, voc_sz, timesteps, device, optimizer, scheduler, final_step=False):
     
     if not final_step:
         num_iters = len_series // bs
@@ -37,16 +37,16 @@ def decompress(model, len_series, bs, vocab_size, timesteps, device, optimizer, 
         bitin = [arithmeticcoding_fast.BitInputStream(f[i]) for i in range(bs)]
         dec = [arithmeticcoding_fast.ArithmeticDecoder(32, bitin[i]) for i in range(bs)]
 
-        prob = np.ones(vocab_size)/vocab_size
-        cumul = np.zeros(vocab_size+1, dtype = np.uint64)
+        prob = np.ones(voc_sz)/voc_sz
+        cumul = np.zeros(voc_sz+1, dtype = np.uint64)
         cumul[1:] = np.cumsum(prob*10000000 + 1)
 
         # Decode first K symbols in each stream with uniform probabilities
         for i in range(bs):
             for j in range(min(timesteps, num_iters)):
-                series_2d[i,j] = dec[i].read(cumul, vocab_size)
+                series_2d[i,j] = dec[i].read(cumul, voc_sz)
 
-        cumul = np.zeros((bs, vocab_size+1), dtype = np.uint64)
+        cumul = np.zeros((bs, voc_sz+1), dtype = np.uint64)
 
         block_len = 20
         test_loss = 0
@@ -64,7 +64,7 @@ def decompress(model, len_series, bs, vocab_size, timesteps, device, optimizer, 
 
             # Decode with Arithmetic Encoder
             for i in range(bs):
-                series_2d[i,j+timesteps] = dec[i].read(cumul[i,:], vocab_size)
+                series_2d[i,j+timesteps] = dec[i].read(cumul[i,:], voc_sz)
             
             by = Variable(torch.from_numpy(series_2d[:, j+timesteps])).to(device)
             loss = loss_function(pred, by)
@@ -105,12 +105,12 @@ def decompress(model, len_series, bs, vocab_size, timesteps, device, optimizer, 
         f = open(FLAGS.temp_file_prefix+'.last','rb')
         bitin = arithmeticcoding_fast.BitInputStream(f)
         dec = arithmeticcoding_fast.ArithmeticDecoder(32, bitin)
-        prob = np.ones(vocab_size)/vocab_size
-        cumul = np.zeros(vocab_size+1, dtype = np.uint64)
+        prob = np.ones(voc_sz)/voc_sz
+        cumul = np.zeros(voc_sz+1, dtype = np.uint64)
         cumul[1:] = np.cumsum(prob*10000000 + 1)        
 
         for j in range(min(timesteps,len_series)):
-            series[j] = dec.read(cumul, vocab_size)
+            series[j] = dec.read(cumul, voc_sz)
         for i in range(len_series-timesteps):
             bx = Variable(torch.from_numpy(series[i:i+timesteps].reshape(1,-1))).to(device)
             with torch.no_grad():
@@ -118,7 +118,7 @@ def decompress(model, len_series, bs, vocab_size, timesteps, device, optimizer, 
                 pred, _ = model(bx)
                 prob = torch.exp(pred).detach().cpu().numpy()
             cumul[1:] = np.cumsum(prob*10000000 + 1)
-            series[i+timesteps] = dec.read(cumul, vocab_size)
+            series[i+timesteps] = dec.read(cumul, voc_sz)
         bitin.close()
         f.close()
         return series
@@ -167,7 +167,7 @@ def main():
     timesteps = params['timesteps']
     len_series = params['len_series']
     id2char_dict = params['id2char_dict']
-    vocab_size = len(id2char_dict)
+    voc_sz = len(id2char_dict)
 
     # Break into multiple streams
     f = open(FLAGS.file_name+'.combined','rb')
@@ -190,35 +190,35 @@ def main():
 
     series = np.zeros(len_series,dtype=np.uint8)
 
-    bsdic = {'vocab_size': vocab_size, 'emb_size': 8,
+    bsdic = {'voc_sz': voc_sz, 'emb_size': 8,
         'length': timesteps, 'jump': 16,
         'hdim1': 8, 'hdim2': 16, 'n_layers': 2,
         'bidirectional': True}
-    comdic = {'vocab_size': vocab_size, 'emb_size': 32,
+    comdic = {'voc_sz': voc_sz, 'emb_size': 32,
         'length': timesteps, 'hdim': 8}
 
 
     # Select Model Parameters based on Alphabet Size
-    if vocab_size >= 1 and vocab_size <=3:
+    if voc_sz >= 1 and voc_sz <=3:
         bsdic['hdim1'] = 8
         bsdic['hdim2'] = 16
         comdic['emb_size'] = 16
         comdic['hdim'] = 1024
       
-    if vocab_size >= 4 and vocab_size <=9:
+    if voc_sz >= 4 and voc_sz <=9:
         bsdic['hdim1'] = 32
         bsdic['hdim2'] = 16
         comdic['emb_size'] = 16
         comdic['hdim'] = 2048
 
-    if vocab_size >= 10 and vocab_size < 128:
+    if voc_sz >= 10 and voc_sz < 128:
         bsdic['hdim1'] = 128
         bsdic['hdim2'] = 128
         bsdic['emb_size'] = 16
         comdic['emb_size'] = 32
         comdic['hdim'] = 2048
 
-    if vocab_size >= 128:
+    if voc_sz >= 128:
         bsdic['hdim1'] = 128
         bsdic['hdim2'] = 256
         bsdic['emb_size'] = 16
@@ -242,19 +242,19 @@ def main():
     scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'min', factor=0.5, threshold=1e-2, patience=1000, cooldown=10000, min_lr=1e-4, verbose=True)
     l = int(len(series)/batch_size)*batch_size
     
-    series[:l] = decompress(commodel, l, batch_size, vocab_size, timesteps, device, optimizer, scheduler)
+    series[:l] = decompress(commodel, l, batch_size, voc_sz, timesteps, device, optimizer, scheduler)
     if l < len_series - timesteps:
-        series[l:] = decompress(commodel, len_series-l, 1, vocab_size, timesteps, device, optimizer, scheduler, final_step = True)
+        series[l:] = decompress(commodel, len_series-l, 1, voc_sz, timesteps, device, optimizer, scheduler, final_step = True)
     else:
         f = open(FLAGS.temp_file_prefix+'.last','rb')
         bitin = arithmeticcoding_fast.BitInputStream(f)
         dec = arithmeticcoding_fast.ArithmeticDecoder(32, bitin) 
-        prob = np.ones(vocab_size)/vocab_size
+        prob = np.ones(voc_sz)/voc_sz
         
-        cumul = np.zeros(vocab_size+1, dtype = np.uint64)
+        cumul = np.zeros(voc_sz+1, dtype = np.uint64)
         cumul[1:] = np.cumsum(prob*10000000 + 1)        
         for j in range(l, len_series):
-            series[j] = dec.read(cumul, vocab_size)
+            series[j] = dec.read(cumul, voc_sz)
         
         bitin.close() 
         f.close()
