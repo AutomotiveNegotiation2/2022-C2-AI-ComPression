@@ -3,6 +3,7 @@
 file1=$1
 file2=$2
 
+echo "comprare file"
 if cmp -s "$file1" "$file2"; then
     printf 'The file "%s" is the same as "%s"\n' "$file1" "$file2"
 else
