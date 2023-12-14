@@ -4,7 +4,7 @@ from torch import nn, optim
 import numpy as np
 
 class BootstrapNN(nn.Module):
-    def __init__(self, voc_sz, emb_sz, length, jump, hdim1, hdim2, n_layers, bidirectional):
+    def __init__(self, voc_sz, emb_sz, length, jump, hdim1, hdim2, n_layers, bi):
         super(BootstrapNN, self).__init__()
         self.embedding = nn.Embedding(voc_sz, emb_sz)
         self.voc_sz = voc_sz
@@ -12,11 +12,11 @@ class BootstrapNN(nn.Module):
         self.hdim1 = hdim1
         self.hdim2 = hdim2
         self.n_layers = n_layers
-        self.bidirectional = bidirectional
+        self.bi = bi
         self.jump = jump
-        self.rnn_cell = nn.GRU(emb_sz, hdim1, n_layers, batch_first=True, bidirectional=bidirectional)
+        self.rnn_cell = nn.GRU(emb_sz, hdim1, n_layers, batch_first=True, bi=bi)
         
-        if bidirectional:
+        if bi:
             self.lin1 = nn.Sequential(
             nn.Linear(2*hdim1*(length//jump), hdim2),
             nn.ReLU(inplace=True)
@@ -49,7 +49,7 @@ class CombinedNN(nn.Module):
         self.bsrnn_cell = bsNN.rnn_cell
         self.bslin1 = bsNN.lin1
         self.bsjump = bsNN.jump
-        if bsNN.bidirectional:
+        if bsNN.bi:
             # self.flin1 = nn.Linear(2*bsNN.hdim1*(length//bsNN.jump), voc_sz)
             self.flat2_size = 2*bsNN.hdim1*(length//bsNN.jump) + emb_sz*length
             self.bsflin1 = bsNN.flin1
