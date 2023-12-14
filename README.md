@@ -92,7 +92,7 @@
 ![](README.assets/dem_img.png)
 ![](README.assets/gps_img.png)
 ![](README.assets/can_img.png)
-![](README.assets/cam_img.png)
+![](README.assets/cam01.jpg)
 
 
 링크 : https://drive.google.com/drive/folders/1eHA4Y8LepUrlAJCojASYY52QQPSNrpHZ?usp=drive_link
