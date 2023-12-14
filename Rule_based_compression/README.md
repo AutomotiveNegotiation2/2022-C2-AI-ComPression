@@ -43,6 +43,9 @@
 - 압축 성능이 향상되는 부분
 
   
+### PCD 데이터
+
+![image-20221017124046316](README.assets/pcd_data.png)
 
 
 ## Environment
