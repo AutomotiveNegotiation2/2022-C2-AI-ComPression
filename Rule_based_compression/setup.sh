@@ -1,5 +1,5 @@
 #!/bin/bash
-
+echo "ENV SETUP..."
 sudo apt update -y && sudo apt upgrade -y && sudo apt-get install python3-pip -y
 sudo apt-get install -y libsm6 libxext6 libxrender-dev
 sudo apt install libgl1-mesa-glx -y
