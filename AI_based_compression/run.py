@@ -6,7 +6,7 @@ import os
 
 def get_argument_parser():
     parser = argparse.ArgumentParser();
-    parser.add_argument('--file_name', type=str, default='files_to_be_compressed/hmm40.txt',
+    parser.add_argument('--file_name', type=str,
                         help='The name of the input file')
     
     return parser
