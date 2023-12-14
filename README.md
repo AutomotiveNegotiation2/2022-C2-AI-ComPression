@@ -23,7 +23,7 @@
   - PCD 데이터 압축 방식 고도화 예정
   - version 1.0.0
 
----
+
 
 
 
@@ -80,3 +80,8 @@
 
 링크 : https://drive.google.com/drive/folders/1eHA4Y8LepUrlAJCojASYY52QQPSNrpHZ?usp=drive_link
 
+
+
+### version
+- version 1.0.0
+ - CAN Compression and Lidar Compression 
