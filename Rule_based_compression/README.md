@@ -15,6 +15,7 @@
 ## DATA
 
 - AI HUB 특수 환경 3D 이미지 데이터셋을 활용함
+
   https://www.aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&aihubDataSe=realm&dataSetSn=198
   - 해당 데이터 셋에서 Training -> incheo4->drive_1099를 활용하여 성능 평가를 진행함.
   
@@ -48,8 +49,8 @@
 
 ![image-20221017124046316](README.assets/pcd_data.png)
 
-- 위에서 11번째 줄까지는 utf-8 열림
-- 아래부터는 바이너리로 저장된 PCD 데이터임
+- 위에서 11번째 줄까지는 utf-8 열리지만 아래부터는 바이너리로 저장된 PCD 데이터임
+- 따라서, PCD 데이터를 확인하기 위해서는 12번째줄부터 바이너리로 읽어야함
 
 
 ## Environment
