@@ -72,10 +72,13 @@
 
 - DEM(Driving Environment Monitoring) 메시지, CAM(이미지) 데이터, CANFD, GPS 데이터로 구성되어 있음
 - 1초마다 생성된 데이터를 파싱하여 년월일_시분초_미리초 디렉토리에 저장함
+- 디렉토리 내용 설명
 
 
 ![](README.assets/data_tree.png)
 
+
+- 디렉토리 내부 구조 (CAM, CAN, DEM, GPS 구성)
 
 ![](README.assets/data_tree2.png)
 
