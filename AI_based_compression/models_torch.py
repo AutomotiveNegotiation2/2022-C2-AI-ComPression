@@ -4,9 +4,9 @@ from torch import nn, optim
 import numpy as np
 
 class BootstrapNN(nn.Module):
-    def __init__(self, voc_sz, emb_size, length, jump, hdim1, hdim2, n_layers, bidirectional):
+    def __init__(self, voc_sz, emb_sz, length, jump, hdim1, hdim2, n_layers, bidirectional):
         super(BootstrapNN, self).__init__()
-        self.embedding = nn.Embedding(voc_sz, emb_size)
+        self.embedding = nn.Embedding(voc_sz, emb_sz)
         self.voc_sz = voc_sz
         self.len = length
         self.hdim1 = hdim1
@@ -14,7 +14,7 @@ class BootstrapNN(nn.Module):
         self.n_layers = n_layers
         self.bidirectional = bidirectional
         self.jump = jump
-        self.rnn_cell = nn.GRU(emb_size, hdim1, n_layers, batch_first=True, bidirectional=bidirectional)
+        self.rnn_cell = nn.GRU(emb_sz, hdim1, n_layers, batch_first=True, bidirectional=bidirectional)
         
         if bidirectional:
             self.lin1 = nn.Sequential(
@@ -43,7 +43,7 @@ class BootstrapNN(nn.Module):
         return out
 
 class CombinedNN(nn.Module):
-    def __init__(self, bsNN, voc_sz, emb_size, length, hdim):
+    def __init__(self, bsNN, voc_sz, emb_sz, length, hdim):
         super(CombinedNN, self).__init__()
         self.bsembedding = bsNN.embedding
         self.bsrnn_cell = bsNN.rnn_cell
@@ -51,11 +51,11 @@ class CombinedNN(nn.Module):
         self.bsjump = bsNN.jump
         if bsNN.bidirectional:
             # self.flin1 = nn.Linear(2*bsNN.hdim1*(length//bsNN.jump), voc_sz)
-            self.flat2_size = 2*bsNN.hdim1*(length//bsNN.jump) + emb_size*length
+            self.flat2_size = 2*bsNN.hdim1*(length//bsNN.jump) + emb_sz*length
             self.bsflin1 = bsNN.flin1
         else:
             # self.flin1 = nn.Linear(bsNN.hdim1*(length//bsNN.jump), voc_sz)
-            self.flat2_size = bsNN.hdim1*(length//bsNN.jump) + emb_size*length
+            self.flat2_size = bsNN.hdim1*(length//bsNN.jump) + emb_sz*length
             self.bsflin1 = bsNN.flin1
 
 
@@ -63,7 +63,7 @@ class CombinedNN(nn.Module):
         self.bsflin2 = bsNN.flin2
 
         self.hdim = hdim
-        self.embedding = nn.Embedding(voc_sz, emb_size)
+        self.embedding = nn.Embedding(voc_sz, emb_sz)
 
         self.layer11 = nn.Sequential(
             nn.Linear(self.flat2_size, hdim),
