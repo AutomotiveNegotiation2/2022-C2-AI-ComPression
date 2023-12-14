@@ -89,9 +89,8 @@
 - GPS : 차량에 설치된 GPS에서 생성된 데이터(10Hz)
 - 데이터 샘플 예시
 
-- 
-![](README.assets/dem_img.PNG)
-![](README.assets/gps_img.PNG)
+![](README.assets/dem_img.png)
+![](README.assets/gps_img.png)
 ![](README.assets/can_img.png)
 ![](README.assets/cam_img.png)
 
