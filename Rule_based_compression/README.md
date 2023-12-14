@@ -44,8 +44,12 @@
 
   
 ### PCD 데이터
+- 헤더
 
 ![image-20221017124046316](README.assets/pcd_data.png)
+
+- 위에서 11번째 줄까지는 utf-8 열림
+- 아래부터는 바이너리로 저장된 PCD 데이터임
 
 
 ## Environment
