@@ -4,10 +4,10 @@ from torch import nn, optim
 import numpy as np
 
 class BootstrapNN(nn.Module):
-    def __init__(self, vocab_size, emb_size, length, jump, hdim1, hdim2, n_layers, bidirectional):
+    def __init__(self, voc_sz, emb_size, length, jump, hdim1, hdim2, n_layers, bidirectional):
         super(BootstrapNN, self).__init__()
-        self.embedding = nn.Embedding(vocab_size, emb_size)
-        self.vocab_size = vocab_size
+        self.embedding = nn.Embedding(voc_sz, emb_size)
+        self.voc_sz = voc_sz
         self.len = length
         self.hdim1 = hdim1
         self.hdim2 = hdim2
@@ -21,14 +21,14 @@ class BootstrapNN(nn.Module):
             nn.Linear(2*hdim1*(length//jump), hdim2),
             nn.ReLU(inplace=True)
             )
-            self.flin1 = nn.Linear(2*hdim1*(length//jump), vocab_size)
+            self.flin1 = nn.Linear(2*hdim1*(length//jump), voc_sz)
         else:
             self.lin1 = nn.Sequential(
             nn.Linear(hdim1*(length//jump), hdim2),
             nn.ReLU(inplace=True)
             )
-            self.flin1 = nn.Linear(hdim1*(length//jump), vocab_size)
-        self.flin2 = nn.Linear(hdim2, vocab_size)
+            self.flin1 = nn.Linear(hdim1*(length//jump), voc_sz)
+        self.flin2 = nn.Linear(hdim2, voc_sz)
 
     def forward(self, inp):
         emb = self.embedding(inp)
@@ -43,27 +43,27 @@ class BootstrapNN(nn.Module):
         return out
 
 class CombinedNN(nn.Module):
-    def __init__(self, bsNN, vocab_size, emb_size, length, hdim):
+    def __init__(self, bsNN, voc_sz, emb_size, length, hdim):
         super(CombinedNN, self).__init__()
         self.bsembedding = bsNN.embedding
         self.bsrnn_cell = bsNN.rnn_cell
         self.bslin1 = bsNN.lin1
         self.bsjump = bsNN.jump
         if bsNN.bidirectional:
-            # self.flin1 = nn.Linear(2*bsNN.hdim1*(length//bsNN.jump), vocab_size)
+            # self.flin1 = nn.Linear(2*bsNN.hdim1*(length//bsNN.jump), voc_sz)
             self.flat2_size = 2*bsNN.hdim1*(length//bsNN.jump) + emb_size*length
             self.bsflin1 = bsNN.flin1
         else:
-            # self.flin1 = nn.Linear(bsNN.hdim1*(length//bsNN.jump), vocab_size)
+            # self.flin1 = nn.Linear(bsNN.hdim1*(length//bsNN.jump), voc_sz)
             self.flat2_size = bsNN.hdim1*(length//bsNN.jump) + emb_size*length
             self.bsflin1 = bsNN.flin1
 
 
-        # self.flin2 = nn.Linear(bsNN.hdim2, vocab_size)
+        # self.flin2 = nn.Linear(bsNN.hdim2, voc_sz)
         self.bsflin2 = bsNN.flin2
 
         self.hdim = hdim
-        self.embedding = nn.Embedding(vocab_size, emb_size)
+        self.embedding = nn.Embedding(voc_sz, emb_size)
 
         self.layer11 = nn.Sequential(
             nn.Linear(self.flat2_size, hdim),
@@ -91,13 +91,13 @@ class CombinedNN(nn.Module):
             nn.ReLU(inplace=False)
             )
 
-        self.last_lin1 = nn.Linear(self.flat2_size, vocab_size)
-        self.last_lin2 = nn.Linear(hdim, vocab_size)
-        self.last_lin3 = nn.Linear(hdim, vocab_size)
+        self.last_lin1 = nn.Linear(self.flat2_size, voc_sz)
+        self.last_lin2 = nn.Linear(hdim, voc_sz)
+        self.last_lin3 = nn.Linear(hdim, voc_sz)
 
         self.weight = nn.Parameter(torch.zeros([1], dtype=torch.float32), requires_grad=True)
 
-        self.final = nn.Linear(vocab_size*3, vocab_size)
+        self.final = nn.Linear(voc_sz*3, voc_sz)
 
     def forward(self, inp):
         emb = self.bsembedding(inp)
