@@ -82,6 +82,7 @@
 - CAN : 차량에서 생성된 CANFD 데이터 (1초 동안 수집)
 - DEM : 차량에서 생성된 DEM 데이터 (10Hz)
 - GPS : 차량에 설치된 GPS에서 생성된 데이터(10Hz)
+- 데이터 샘플 에시
 
 링크 : https://drive.google.com/drive/folders/1eHA4Y8LepUrlAJCojASYY52QQPSNrpHZ?usp=drive_link
 
