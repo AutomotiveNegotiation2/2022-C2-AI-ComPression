@@ -84,4 +84,5 @@
 
 ### version
 - version 1.0.0
- - CAN Compression and Lidar Compression 
+ - CAN Compression and Lidar Compression
+   - CAN Compression : Dzip, Lidar Compression : Voxelization
