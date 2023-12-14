@@ -25,7 +25,7 @@ def loss_function(pred, target):
     loss = 1/np.log(2) * F.nll_loss(pred, target)
     return loss
 
-def decompress(model, len_ser, bs, voc_sz, timesteps, device, optimizer, scheduler, final_step=False):
+def decompress(model, len_ser, bs, voc_sz, time_st, device, optimizer, scheduler, final_step=False):
     
     if not final_step:
         num_iters = len_ser // bs
@@ -43,7 +43,7 @@ def decompress(model, len_ser, bs, voc_sz, timesteps, device, optimizer, schedul
 
         # Decode first K symbols in each stream with uniform probabilities
         for i in range(bs):
-            for j in range(min(timesteps, num_iters)):
+            for j in range(min(time_st, num_iters)):
                 series_2d[i,j] = dec[i].read(cumul, voc_sz)
 
         cumul = np.zeros((bs, voc_sz+1), dtype = np.uint64)
@@ -52,9 +52,9 @@ def decompress(model, len_ser, bs, voc_sz, timesteps, device, optimizer, schedul
         test_loss = 0
         batch_loss = 0
         start_time = time.time()
-        for j in (range(num_iters - timesteps)):
+        for j in (range(num_iters - time_st)):
             # Create Batch
-            bx = Variable(torch.from_numpy(series_2d[:,j:j+timesteps])).to(device)
+            bx = Variable(torch.from_numpy(series_2d[:,j:j+time_st])).to(device)
             
             with torch.no_grad():
                 model.eval()
@@ -64,9 +64,9 @@ def decompress(model, len_ser, bs, voc_sz, timesteps, device, optimizer, schedul
 
             # Decode with Arithmetic Encoder
             for i in range(bs):
-                series_2d[i,j+timesteps] = dec[i].read(cumul[i,:], voc_sz)
+                series_2d[i,j+time_st] = dec[i].read(cumul[i,:], voc_sz)
             
-            by = Variable(torch.from_numpy(series_2d[:, j+timesteps])).to(device)
+            by = Variable(torch.from_numpy(series_2d[:, j+time_st])).to(device)
             loss = loss_function(pred, by)
             test_loss += loss.item()
             batch_loss += loss.item()
@@ -81,8 +81,8 @@ def decompress(model, len_ser, bs, voc_sz, timesteps, device, optimizer, schedul
             if (j+1) % block_len == 0:
                 model.train()
                 optimizer.zero_grad()
-                data_x = np.concatenate([series_2d[:, j + np.arange(timesteps) - p] for p in range(block_len)], axis=0)
-                data_y = np.concatenate([series_2d[:, j + timesteps - p] for p in range(block_len)], axis=0)
+                data_x = np.concatenate([series_2d[:, j + np.arange(time_st) - p] for p in range(block_len)], axis=0)
+                data_y = np.concatenate([series_2d[:, j + time_st - p] for p in range(block_len)], axis=0)
 
                 bx = Variable(torch.from_numpy(data_x)).to(device)
                 by = Variable(torch.from_numpy(data_y)).to(device)
@@ -109,16 +109,16 @@ def decompress(model, len_ser, bs, voc_sz, timesteps, device, optimizer, schedul
         cumul = np.zeros(voc_sz+1, dtype = np.uint64)
         cumul[1:] = np.cumsum(prob*10000000 + 1)        
 
-        for j in range(min(timesteps,len_ser)):
+        for j in range(min(time_st,len_ser)):
             series[j] = dec.read(cumul, voc_sz)
-        for i in range(len_ser-timesteps):
-            bx = Variable(torch.from_numpy(series[i:i+timesteps].reshape(1,-1))).to(device)
+        for i in range(len_ser-time_st):
+            bx = Variable(torch.from_numpy(series[i:i+time_st].reshape(1,-1))).to(device)
             with torch.no_grad():
                 model.eval()
                 pred, _ = model(bx)
                 prob = torch.exp(pred).detach().cpu().numpy()
             cumul[1:] = np.cumsum(prob*10000000 + 1)
-            series[i+timesteps] = dec.read(cumul, voc_sz)
+            series[i+time_st] = dec.read(cumul, voc_sz)
         bitin.close()
         f.close()
         return series
@@ -164,7 +164,7 @@ def main():
     f.close()
 
     batch_size = params['bs']
-    timesteps = params['timesteps']
+    time_st = params['time_st']
     len_ser = params['len_ser']
     id2char_dict = params['id2char_dict']
     voc_sz = len(id2char_dict)
@@ -191,11 +191,11 @@ def main():
     series = np.zeros(len_ser,dtype=np.uint8)
 
     bsdic = {'voc_sz': voc_sz, 'emb_size': 8,
-        'length': timesteps, 'jump': 16,
+        'length': time_st, 'jump': 16,
         'hdim1': 8, 'hdim2': 16, 'n_layers': 2,
         'bidirectional': True}
     comdic = {'voc_sz': voc_sz, 'emb_size': 32,
-        'length': timesteps, 'hdim': 8}
+        'length': time_st, 'hdim': 8}
 
 
     # Select Model Parameters based on Alphabet Size
@@ -242,9 +242,9 @@ def main():
     scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'min', factor=0.5, threshold=1e-2, patience=1000, cooldown=10000, min_lr=1e-4, verbose=True)
     l = int(len(series)/batch_size)*batch_size
     
-    series[:l] = decompress(commodel, l, batch_size, voc_sz, timesteps, device, optimizer, scheduler)
-    if l < len_ser - timesteps:
-        series[l:] = decompress(commodel, len_ser-l, 1, voc_sz, timesteps, device, optimizer, scheduler, final_step = True)
+    series[:l] = decompress(commodel, l, batch_size, voc_sz, time_st, device, optimizer, scheduler)
+    if l < len_ser - time_st:
+        series[l:] = decompress(commodel, len_ser-l, 1, voc_sz, time_st, device, optimizer, scheduler, final_step = True)
     else:
         f = open(FLAGS.temp_file_prefix+'.last','rb')
         bitin = arithmeticcoding_fast.BitInputStream(f)
