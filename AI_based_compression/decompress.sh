@@ -13,3 +13,4 @@ python3 decompress_adaptive.py --file_name $BASE --output $OUTPUT --model_weight
 EndTime=$(date +%s.%N)
 diff=$( echo "scale=1;($EndTime - $StartTime)*1000" | bc -l) 
 echo "DECOMPRESSING TIME : $diff msec"
+echo "DECOMP DONE"
