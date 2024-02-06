@@ -121,3 +121,13 @@
 - version 1.0.0
  - CAN Compression and Lidar Compression
    - CAN Compression : Dzip, Lidar Compression : Voxelization
+
+
+
+### CANFD
+
+- 상용차(카니발) 내 샤시에서 데이터 수집
+
+- 구글 드라이브 
+
+https://drive.google.com/drive/folders/1q6BlaVfhL8DpyhRHqT7par3zRNFZTzsJ?usp=drive_link
