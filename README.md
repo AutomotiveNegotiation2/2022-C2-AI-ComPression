@@ -12,6 +12,7 @@
 - Compression Code
   - AI_based_compression
   - Rule_based_compression
+  - SensorData_Parser
 
 
 ### Compression Code Description
@@ -22,8 +23,9 @@
 - **Rule_based_compression** : 복셀라이제이션 기반 압축 모델
   - PCD 데이터 압축 방식 고도화 예정
   - version 1.0.0
-
-
+- **SensorData_Parser** : 다종 센서 데이터 수집 
+  - GPS, Camera, CANFD 수집 
+  - version 1.0.1
 
 
 
