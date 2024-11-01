@@ -1,5 +1,7 @@
 import cv2
 import time
+# opencv library info
+# https://pypi.org/project/opencv-python/
 def read_data(share_list ) :
     print("START_CAMERA")
 
