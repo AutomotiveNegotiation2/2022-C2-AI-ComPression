@@ -201,7 +201,10 @@ https://drive.google.com/drive/folders/1q6BlaVfhL8DpyhRHqT7par3zRNFZTzsJ?usp=dri
 
 - CAN Compression and Lidar Compression
    - CAN Compression : Dzip, Lidar Compression : Voxelization
+- version 1.0.1
 
+- Sensor Data Parser
+   - CANFD, CAMERA, GPS
    
 
 
