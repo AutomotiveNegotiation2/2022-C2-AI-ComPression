@@ -8,10 +8,9 @@
 
 
 ## File Layout
-
 - GPS_read.py
 - CAMERA_read.py
-
+- CANFD_read.py
 
 ### GPS_read
 - GPS 데이터 수집 환경
@@ -30,3 +29,8 @@ pip install opencv-python
 ```
 - RTSP를 활용하여 영상 데이터를 실시간으로 수집함
 - 카메라 4대가 전,후, 좌, 우로 설치되어 있으며 1초에 카메라별 1장씩 데이터를 저장함
+
+### CANFD_read
+- CANFD 데이터 수집 환경
+- CAN Logger 장치 사에서 제공하는 프로그램과 Local 통신하여 데이터 수집
+- 1초 동안 데이터를 수집하여 저장함
