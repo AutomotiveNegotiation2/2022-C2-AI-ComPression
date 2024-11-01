@@ -3,6 +3,7 @@ from pyubx2 import UBXReader
 import time
 
 def read_data(share_list, port_name = "/dev/ttyACM2",baudrate= 115200) :
+    # share_list  -> 수집된 데이터를 공유 데이터 리스트에 저장
     delta_t = 0
     data_str = ""
     print("START_GPS")
