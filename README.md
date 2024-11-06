@@ -72,7 +72,7 @@
 ## Data open
 ![](README.assets/data_img.PNG)
 
-- 상용차
+- 상용차(국내)
 - GPS : 1
 - CAMERA : 4
 - CANFD : Chassis
