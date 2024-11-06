@@ -9,7 +9,7 @@
 
 ## Directory Layout
 
-- Compression Code
+- Compression Code(python)
   - AI_based_compression
   - Rule_based_compression
   - SensorData_Parser
