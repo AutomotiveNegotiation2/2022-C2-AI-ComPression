@@ -24,7 +24,7 @@
   - PCD 데이터 압축 방식 고도화 예정
   - version 1.0.0
 - **SensorData_Parser** : 다종 센서 데이터 수집 
-  - GPS, Camera, CANFD 수집 
+  - GPS, Camera, CANFD 수집 방법
   - version 1.0.1
 
 
