@@ -10,6 +10,7 @@
 - CAMERA_read.py
 - CANFD_read.py
 - SENSOR_PARSER.py
+- DEM_gen.py
 
 ### GPS_read
 ![GPS_device](README.assets/GPS_device.png)
