@@ -39,7 +39,10 @@ pip install opencv-python
 ### DEM_gen
 - CANFD, GPS, CAMERA 데이터를 활용하여 자율 주행 중 주변 상황에 대한 정보를 포함함
  - DeepLearning model을 활용한 Object Detection 정보
- - Object Detection 정보와 GPS 정보를 활용하여 주변 객체의 GPS 위치 정보
+ - Object Detection된 카메라 정보
+ - Object Detection 정보와 GPS 정보를 활용하여 주변 객체의 픽셀 및 GPS 위치 정보
+ - CANFD에서 추출한 차량의 속도, 지시등, 핸들, 변속 기어 정보
+ - GPS에서 추출한 차량의 GPS 위치 정보
 
 
 ### SENSOR_PARSER
