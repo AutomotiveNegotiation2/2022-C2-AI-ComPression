@@ -8,6 +8,7 @@ import datetime
 import CAMERA_read
 import GPS_read
 import CANFD_read
+import DEM_gen
 
 
 def get_argument_parser():
@@ -27,9 +28,12 @@ def CAM_PARSER(arg_list, ):
 def CANFD_PARSER(arg_list,):
     CANFD_read.read_data(arg_list,)
 
+def DEM_PARSER(arg_list,):
+    DEM_gen.DEM_GEN(arg_list,)
 
 def DAT_GEN(arg_list,):
         # 0 : canfd
+        # 2 : DEM
         # 3 : GPS
         # 4 : Camera
 
@@ -37,13 +41,16 @@ def DAT_GEN(arg_list,):
     dir_CAM = "CAM_DIR"
     dir_CANFD = "CAN_DIR"
     dir_GPS = "GPS_DIR"
+    dir_DEM = "DEM_DIR"
     can_data = ""
     gps_data = ""
     cam_data = ""
+    dem_data = ""
     
     while True:
         # data_dir = os.path.join(save_dir,glob_t)
-        # os.mkdir(data_dir)     
+        # os.mkdir(data_dir)   
+        dem_data = arg_list[2]
         gps_data = arg_list[3]
         cam_data = arg_list[4]
         can_data = arg_list[0]
@@ -52,14 +59,17 @@ def DAT_GEN(arg_list,):
             print("dem : ",len(arg_list[2]) , " can : ",len(arg_list[0]) ," g : ", len(arg_list[3]) ," cam : ", len(arg_list[4]))
 
             start_t = time.time()
-            print(glob_t)
+
             # CANFD
             with open( os.path.join(save_dir,dir_CANFD, glob_t +".txt"),"a"  ) as cf:
-                cf.write(  can_data )
+                cf.write(can_data)
             # gps
             with open( os.path.join(save_dir,dir_GPS, glob_t +".txt"),"w"  ) as gf:
                 gf.write(gps_data)
-                
+            # dem
+            with open( os.path.join(save_dir,dir_DEM, glob_t +".txt"),"w"  ) as df:
+                df.write(dem_data)
+
             cam_ffff = os.path.join(save_dir,dir_CAM, glob_t )
             
             if not os.path.isdir(cam_ffff):
@@ -89,6 +99,9 @@ if __name__ == "__main__":
     p2_CAM = Process(target=CAM_PARSER,args=(data_list,))
     p2_CAM.start()
 
+    p3_DEM = Process(target=DEM_PARSER,args=(data_list,))
+    p3_DEM.start()
+
     p4_CANFD = Process(target=CANFD_PARSER,args=(data_list,))
     p4_CANFD.start()
 
@@ -97,5 +110,6 @@ if __name__ == "__main__":
     
     p1_GPS.join()
     p2_CAM.join()
+    p3_DEM.join()
     p4_CANFD.join()
     p7_DAT_GEN.join()
