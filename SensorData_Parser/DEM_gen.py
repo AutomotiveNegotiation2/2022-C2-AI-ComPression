@@ -174,4 +174,36 @@ def DEM_GEN(arg_list, ):
                 process_camera_objects(cam_pos,1, cam2, cam02_H, 90, "cam2",mylat, mylon, my_head)
                 process_camera_objects(cam_pos,2, cam3, cam03_H, 270, "cam3",mylat, mylon, my_head)
                 process_camera_objects(cam_pos, 3, cam4, cam04_H, 270, "cam4",mylat, mylon, my_head)
-                
+                    
+        if len(global_t) > 6:
+            arg_list[5] = global_t
+            
+
+            e_t =  time.time()
+            ttt = (e_t - s_t)
+            if ttt < 1:
+                mct += 1
+                DEM_format = {
+                        'Timestamp': f'{raw_t}_{timestamp_d}', 
+                        'Messagecount': mct, 
+                        'CarSpeed': speed, 
+                        'CarSign': sign, 
+                        'CarMission': gear, 
+                        'CarAngle': handle, 
+                        'CarPosition': [lat, lon], 
+                        'CameraPosition': cam_pos, 
+                        'CameraDetectObj': cam_obj,
+                        'CameraDetectObj_gps' : cam_obj_gps
+                        
+                        }
+
+                dem_str += str(DEM_format)
+                dem_str += "\n"
+                cam_obj = []
+                cam_obj_gps= []
+                time.sleep(1 - ttt)
+            else:
+                print("over turn : ", ttt)
+        l_t = time.time()
+        del_t += (l_t - s_t)
+
