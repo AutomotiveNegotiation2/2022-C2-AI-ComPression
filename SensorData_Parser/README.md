@@ -37,6 +37,7 @@ pip install opencv-python
 - 1초 동안 데이터를 수집하여 저장함
 
 ### DEM_gen
+![DEM]( README.assets/DEM_proto.png)
 - CANFD, GPS, CAMERA 데이터를 활용하여 자율 주행 중 주변 상황에 대한 정보를 포함함
     - DeepLearning model을 활용한 Object Detection 정보
     - Object Detection된 카메라 정보
