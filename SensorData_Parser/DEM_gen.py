@@ -146,3 +146,32 @@ def DEM_GEN(arg_list, ):
                     raw_t = f"{yr}{month}{day}_{hour}{minute:02d}{second:02d}"
 
         
+        global_t = f'{raw_t}_{timestamp_d}'
+        detect_d = arg_list[6]
+        if len(detect_d):
+
+            j_d = json.loads(detect_d)
+            cam1 = j_d["cam1"]
+            cam2 = j_d["cam2"]
+            cam3 =  j_d["cam3"]
+            cam4 = j_d["cam4"]
+            #print(detect_d)
+            cam_pos[0] = 1
+
+            # Process camera 1
+            process_camera_objects(cam_pos,0, cam1, cam01_H, 0, "cam1", mylat, mylon, my_head)
+
+            if sign == 1:
+                # Process camera 2 and 4
+                process_camera_objects(cam_pos,1, cam2, cam02_H, 90, "cam2", mylat, mylon, my_head)
+                process_camera_objects(cam_pos,3, cam4, cam04_H, 180, "cam4",mylat, mylon, my_head)
+            elif sign == 2:
+                # Process camera 3 and 4
+                process_camera_objects(cam_pos,2, cam3, cam03_H, 270, "cam3",mylat, mylon, my_head)
+                process_camera_objects(cam_pos,3, cam4, cam04_H, 180, "cam4",mylat, mylon, my_head)
+            elif sign == 3:
+                # Process camera 2, 3, and 4
+                process_camera_objects(cam_pos,1, cam2, cam02_H, 90, "cam2",mylat, mylon, my_head)
+                process_camera_objects(cam_pos,2, cam3, cam03_H, 270, "cam3",mylat, mylon, my_head)
+                process_camera_objects(cam_pos, 3, cam4, cam04_H, 270, "cam4",mylat, mylon, my_head)
+                
