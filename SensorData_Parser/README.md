@@ -36,6 +36,12 @@ pip install opencv-python
 - CAN Logger 장치 사에서 제공하는 프로그램과 Local 통신하여 데이터 수집
 - 1초 동안 데이터를 수집하여 저장함
 
+### DEM_gen
+- CANFD, GPS, CAMERA 데이터를 활용하여 자율 주행 중 주변 상황에 대한 정보를 포함함
+ - DeepLearning model을 활용한 Object Detection 정보
+ - Object Detection 정보와 GPS 정보를 활용하여 주변 객체의 GPS 위치 정보
+
+
 ### SENSOR_PARSER
 - 각종 센서 데이터를 모아서 저장하는 프로그램
 - 센서별 비동기적 프로세스를 multiprocessing을 활용 동시에 수집함
