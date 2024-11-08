@@ -101,9 +101,13 @@ if __name__ == "__main__":
     manager = Manager()
     data_list = manager.list()
     for _ in range(7):
-        # 0 : CANFD
+        # 0 : canfd
+        # 1 : Timestamp
+        # 2 : DEM
         # 3 : GPS
         # 4 : Camera
+        # 5 : global_t
+        # 6 : DETECT
         data_list.append([])
     
     p1_GPS = Process(target=GPS_PARSER,args=(data_list,))
