@@ -22,7 +22,7 @@ pip install pyserial
 - GPS 표준 프로토콜
 
 ### CAMERA_read
-
+![CAMERA_device](README.assets/CAMERA_device.png)
 - CAMERA 데이터 수집 환경
 ```
 pip install opencv-python
