@@ -105,3 +105,44 @@ def DEM_GEN(arg_list, ):
                 except Exception as E:
                     print(E)        
 
+        if len(gps_d):
+            for g1 in gps_d.split("\n"):
+                data_line_sp = g1.split(",")
+                if data_line_sp[0] == "$GPRMC":
+                    utc_time = data_line_sp[1]
+                    hour = int(utc_time[:2]) +9 
+                    minute = int(utc_time[2:4])
+                    second =int( utc_time[4:6])
+                    lat = data_line_sp[3]
+                    lon = data_line_sp[5]
+                    
+                    lat = float(str(lat)[:2]) + float(str(lat)[2:]) /60
+                    lon = float(str(lon)[:3]) + float(str(lon)[3:]) /60
+                    if len(data_line_sp[8]) !=0:
+                        head = float(data_line_sp[8])
+                    else:
+                        #NOT_TRACK_HEAD"
+                        head = my_head
+                    
+                    mylat = lat
+                    mylon = lon
+                    my_head = head
+                    yr = str(time.localtime().tm_year)
+                    month = "0"+ str(time.localtime().tm_mon) if len(str(time.localtime().tm_mon)) == 1 else str(time.localtime().tm_mon) 
+                    day = "0" +str(time.localtime().tm_mday) if len(str(time.localtime().tm_mday)) == 1 else str(time.localtime().tm_mday)
+                    
+                    raw_data_name = f"{yr}{month}{day}_{hour:02d}{minute:02d}{second:02d}"
+                    raw_t = f"{yr}{month}{day}_{hour:02d}{minute:02d}{second:02d}"
+                    
+                else:
+                    yr = str(time.localtime().tm_year)
+                    month = "0"+ str(time.localtime().tm_mon) if len(str(time.localtime().tm_mon)) == 1 else str(time.localtime().tm_mon) 
+                    day = "0" +str(time.localtime().tm_mday) if len(str(time.localtime().tm_mday)) == 1 else str(time.localtime().tm_mday)
+                    
+                    hour= int(time.localtime().tm_hour)
+                    minute = int(time.localtime().tm_min)
+                    second = int(time.localtime().tm_sec)
+                    
+                    raw_t = f"{yr}{month}{day}_{hour}{minute:02d}{second:02d}"
+
+        
