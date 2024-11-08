@@ -32,7 +32,7 @@ pip install opencv-python
 
 ### CANFD_read
 ![Controller_Area_Network](README.assets/CANFD_network.png)
-- CANFD 데이터 수집 환경
+- CANFD 데이터 수집 환경 : 상용차량 C-CANFD
 - CAN Logger 장치 사에서 제공하는 프로그램과 Local 통신하여 데이터 수집
 - 1초 동안 데이터를 수집하여 저장함
 
