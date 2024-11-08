@@ -12,6 +12,7 @@
 - SENSOR_PARSER.py
 
 ### GPS_read
+![GPS_device](README.assets/GPS_device.png)
 - GPS 데이터 수집 환경
 ```
 pip install pyubx2
@@ -21,6 +22,7 @@ pip install pyserial
 - GPS 표준 프로토콜
 
 ### CAMERA_read
+
 - CAMERA 데이터 수집 환경
 ```
 pip install opencv-python
