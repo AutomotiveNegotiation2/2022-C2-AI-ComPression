@@ -43,6 +43,7 @@ pip install opencv-python
     - Object Detection 정보와 GPS 정보를 활용하여 주변 객체의 픽셀 및 GPS 위치 정보
     - CANFD에서 추출한 차량의 속도, 지시등, 핸들, 변속 기어 정보
     - GPS에서 추출한 차량의 GPS 위치 정보
+- 메시지는 정보를 1초마다 갱신하여 저장함
 
 ### SENSOR_PARSER
 - 각종 센서 데이터를 모아서 저장하는 프로그램
