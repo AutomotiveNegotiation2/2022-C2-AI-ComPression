@@ -9,7 +9,8 @@ import CAMERA_read
 import GPS_read
 import CANFD_read
 import DEM_gen
-
+import DETECT_read
+import TIMESTAMP_read
 
 def get_argument_parser():
     parser = argparse.ArgumentParser()
@@ -27,6 +28,18 @@ def CAM_PARSER(arg_list, ):
 
 def CANFD_PARSER(arg_list,):
     CANFD_read.read_data(arg_list,)
+
+def TIMESTAMP_PARSER(arg_list, ):
+    TIMESTAMP_read.read_data(arg_list)
+
+def DETECT_PARSER(arg_list,):
+
+    try:
+        while True:
+            DETECT_read.read_data(arg_list,)
+            
+    except Exception as e:
+        print(e)
 
 def DEM_PARSER(arg_list,):
     DEM_gen.DEM_GEN(arg_list,)
