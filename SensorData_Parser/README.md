@@ -50,4 +50,6 @@ pip install opencv-python
 ### SENSOR_PARSER
 - 각종 센서 데이터를 모아서 저장하는 프로그램
 - 센서별 비동기적 프로세스를 multiprocessing을 활용 동시에 수집함
+- Timestamp를 활용하여 동기적으로 각종 데이터를 저장함
+    - GPS, CANFD, DEM, CAMRERA
 
