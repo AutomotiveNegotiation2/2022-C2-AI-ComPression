@@ -31,6 +31,7 @@ pip install opencv-python
 - 카메라 4대가 전,후,좌,우로 설치되어 있으며 1초에 카메라별 1장씩 데이터를 저장함
 
 ### CANFD_read
+![Controller_Area_Network](README.assets/CANFD_network.png)
 - CANFD 데이터 수집 환경
 - CAN Logger 장치 사에서 제공하는 프로그램과 Local 통신하여 데이터 수집
 - 1초 동안 데이터를 수집하여 저장함
