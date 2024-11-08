@@ -118,6 +118,12 @@ if __name__ == "__main__":
     p4_CANFD = Process(target=CANFD_PARSER,args=(data_list,))
     p4_CANFD.start()
 
+    p5_DETECT_PARSER = Process(target=DETECT_PARSER,args=(data_list,))
+    p5_DETECT_PARSER.start()
+
+    p6_TIMESTAMP_PARSER = Process(target=TIMESTAMP_PARSER,args=(data_list,))
+    p6_TIMESTAMP_PARSER.start()
+
     p7_DAT_GEN = Process(target=DAT_GEN, args=(data_list,))
     p7_DAT_GEN.start()    
     
@@ -125,4 +131,6 @@ if __name__ == "__main__":
     p2_CAM.join()
     p3_DEM.join()
     p4_CANFD.join()
+    p5_DETECT_PARSER.join()
+    p6_TIMESTAMP_PARSER.join()
     p7_DAT_GEN.join()
