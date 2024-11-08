@@ -2,8 +2,7 @@ import numpy as np
 import datetime
 import time
 import json
-import image2world
-import get_obj_pos
+from preprocessing import * 
 
 # Load configuration file
 with open("config.json", "r") as config_file:
