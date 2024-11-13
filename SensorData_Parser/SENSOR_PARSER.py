@@ -14,8 +14,6 @@ import TIMESTAMP_read
 
 def get_argument_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--origin_data_path', type=str, default='/root/data/(20240605)compression_AI-main/compression_model/data/dummy_data',
-                        help='raw_data_path')
     parser.add_argument('--raw_data_path', type=str, default='/root/data/(20240605)compression_AI-main/compression_model/data/RAW_DATA_STORAGE_DIR',
                         help='raw_data_path')
     return parser
@@ -97,7 +95,6 @@ if __name__ == "__main__":
 
     parser = get_argument_parser()
     args = parser.parse_args()
-    lock = Lock()
     manager = Manager()
     data_list = manager.list()
     for _ in range(7):
