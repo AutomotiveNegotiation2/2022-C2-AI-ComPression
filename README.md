@@ -116,17 +116,12 @@
 링크 : https://drive.google.com/drive/folders/1eHA4Y8LepUrlAJCojASYY52QQPSNrpHZ?usp=drive_link
 
 
-
-
-
 ## CANFD DATASET
 
 ### 1. DATASET RELEASE
 
 - 해당 데이터는 상용차(카니발)에서 수집한 CANFD 정상 데이터셋으로 구성됨.
 - 샤시 CANFD 네트워크에서 수집한 차량 제어 데이터셋임
-
-
 
 ### 2. DATASET
 
