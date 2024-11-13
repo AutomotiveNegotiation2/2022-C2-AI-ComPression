@@ -18,6 +18,10 @@ def get_argument_parser():
                         help='raw_data_path')
     return parser
 
+parser = get_argument_parser()
+parse = parser.parse_args()
+
+
 def GPS_PARSER(arg_list,):
     GPS_read.read_data(arg_list)
     
@@ -48,7 +52,7 @@ def DAT_GEN(arg_list,):
         # 3 : GPS
         # 4 : Camera
 
-    save_dir = ""
+    save_dir = parse.raw_data_path
     dir_CAM = "CAM_DIR"
     dir_CANFD = "CAN_DIR"
     dir_GPS = "GPS_DIR"
@@ -93,8 +97,6 @@ def DAT_GEN(arg_list,):
 
 if __name__ == "__main__":
 
-    parser = get_argument_parser()
-    args = parser.parse_args()
     manager = Manager()
     data_list = manager.list()
     for _ in range(7):
