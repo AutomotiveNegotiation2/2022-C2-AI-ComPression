@@ -30,8 +30,6 @@ def CAM_PARSER(arg_list, ):
 def CANFD_PARSER(arg_list,):
     CANFD_read.read_data(arg_list,)
 
-def TIMESTAMP_PARSER(arg_list, ):
-    TIMESTAMP_read.read_data(arg_list)
 
 def DETECT_PARSER(arg_list,):
 
