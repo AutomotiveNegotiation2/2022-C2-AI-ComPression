@@ -1,4 +1,4 @@
-from multiprocessing import Process, Manager , Lock
+from multiprocessing import Process, Manager
 import cv2
 import time
 import numpy as np
