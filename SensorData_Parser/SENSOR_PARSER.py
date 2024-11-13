@@ -48,6 +48,7 @@ def DEM_PARSER(arg_list,):
 
 def DAT_GEN(arg_list,):
         # 0 : canfd
+        # 1 :
         # 2 : DEM
         # 3 : GPS
         # 4 : Camera
@@ -63,8 +64,7 @@ def DAT_GEN(arg_list,):
     dem_data = ""
     
     while True:
-        # data_dir = os.path.join(save_dir,glob_t)
-        # os.mkdir(data_dir)   
+ 
         dem_data = arg_list[2]
         gps_data = arg_list[3]
         cam_data = arg_list[4]
@@ -85,12 +85,12 @@ def DAT_GEN(arg_list,):
             with open( os.path.join(save_dir,dir_DEM, glob_t +".txt"),"w"  ) as df:
                 df.write(dem_data)
 
-            cam_ffff = os.path.join(save_dir,dir_CAM, glob_t )
+            cam_list = os.path.join(save_dir,dir_CAM, glob_t )
             
-            if not os.path.isdir(cam_ffff):
-                os.mkdir( cam_ffff )
+            if not os.path.isdir(cam_list):
+                os.mkdir( cam_list )
             for cname,cdata in zip(["cam1","cam2","cam3","cam4"],cam_data ):
-                cv2.imwrite(os.path.join(cam_ffff,cname+".jpg"), cdata)
+                cv2.imwrite(os.path.join(cam_list,cname+".jpg"), cdata)
             end_t = time.time()
             time.sleep(1 - (end_t - start_t))
 
