@@ -101,7 +101,7 @@ def DEM_compression(arg_list):
         if len(dem_data_q) == 0 :
             file_list = os.listdir(raw_data_path)
             file_list.sort()
-            print(f"Mean_ dem_spacce_savings : {np.mean(dem_list)}")
+            print(f"[ Average ]dem_spacce_savings : {np.mean(dem_list)}")
             break
 
         if len(dem_data_q) != 0:
