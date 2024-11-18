@@ -59,12 +59,14 @@ def CAM_compression(arg_list):
     dir_list = os.listdir(raw_data_path)
     dir_list.sort()
     cam_data_q = deque(dir_list)
-    
+    cam_list = []
     while True:
         if len(cam_data_q) == 0 :
             
             dir_list = os.listdir(raw_data_path)
             dir_list.sort()
+            print(f"[ Average ]dem_spacce_savings : {np.mean(cam_list)}")
+
             break
 
         if len(cam_data_q) != 0:
@@ -84,7 +86,7 @@ def CAM_compression(arg_list):
             
             space_savings = (1 - ( com_size / ori_size)) * 100
             print(f"CAM_SPACE_SAVINGS : {space_savings:4.2f}_{compressed_res}")
-            
+            cam_list.append(space_savings)
             shutil.rmtree(os.path.join(raw_data_path, cam_d))
 
 def DEM_compression(arg_list):
