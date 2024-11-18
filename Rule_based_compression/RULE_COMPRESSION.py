@@ -107,7 +107,23 @@ def DEM_compression(arg_list):
             print(f"dem_spacce_savings : {np.mean(dem_list)}")
             break
 
+        if len(dem_data_q) != 0:
+            dem_f = dem_data_q.popleft()
+            file_name = dem_f.split(".")[0]
+            compressed_res =  os.path.join( compressed_path, f"DEM_{Vehicle_ID}"+file_name +".zip")
+            my_zip = zipfile.ZipFile(compressed_res ,mode='w', compresslevel = 9)  # zip파일 쓰기모드
+            
+            my_zip.write( os.path.join(raw_data_path, dem_f) , compress_type=zipfile.ZIP_DEFLATED )         # 압축할 파일 write
+            my_zip.close()
 
+            com_size = os.path.getsize( compressed_res )
+            ori_size = os.path.getsize(  os.path.join(raw_data_path,dem_f) )
+            if (ori_size == 0) or (com_size == 0) :
+                continue
+            space_savings = (1 - ( com_size / ori_size)) * 100
+            print(f"DEM_SPACE_SAVINGS : {space_savings:4.2f}_{compressed_res}")
+            #time.sleep(0.4)
+            os.remove(os.path.join(raw_data_path,dem_f))
 
 
 
