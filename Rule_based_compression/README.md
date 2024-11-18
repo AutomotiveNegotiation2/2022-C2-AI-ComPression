@@ -20,7 +20,9 @@
 
   https://www.aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&aihubDataSe=realm&dataSetSn=198
   - 해당 데이터 셋에서 Training -> incheo4->drive_1099를 활용하여 성능 평가를 진행함.
-  
+
+- SensorData_Parser 프로그램으로 수집한 데이터를 활용함
+  - DEM, CANFD, IMAGE, GPS 데이터 1개씩
 
 
 ## Voxelization Compression RESULT
