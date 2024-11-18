@@ -61,6 +61,15 @@ def CAM_compression(arg_list):
     dir_list.sort()
     cam_data_q = deque(dir_list)
     
+    while True:
+        if len(cam_data_q) == 0 :
+            
+            dir_list = os.listdir(raw_data_path)
+            dir_list.sort()
+            
+            break
+
+
 
 def DEM_compression(arg_list):
     Vehicle_ID = arg_list[1]["Vehicle_ID"]
@@ -71,13 +80,6 @@ def DEM_compression(arg_list):
     file_list.sort()
     dem_data_q = deque(file_list)
     dem_list = []
-
-    while True:
-        if len(dem_data_q) == 0 :
-            file_list = os.listdir(raw_data_path)
-            file_list.sort()
-            print(f"dem_spacce_savings : {np.mean(dem_list)}")
-            break
 
 
 
@@ -90,14 +92,6 @@ def CANFD_compression(arg_list):
     sorted(file_list)
     canfd_data_q = deque(file_list)
     canfd_list = []
-    while True:
-
-        if len(canfd_data_q) == 0 :
-            file_list = os.listdir(raw_data_path)
-            sorted(file_list)
-            print(f"canfd_space_savings {np.mean(canfd_list)}")    
-            break
-
 
 
 def RuleCompression():
