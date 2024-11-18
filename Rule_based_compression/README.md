@@ -10,6 +10,8 @@
 
 ![voxelization_desc](README.assets/voxelization_desc.png)
 
+- 멀티프로세스 기반 DEM, CANFD, IMAGE, GPS 압축
+  - zip 기반의 실시간 데이터 압축 프로그램
 ​    
 
 ## DATA
@@ -82,9 +84,6 @@ bash setup.sh
 
 
 ## HOW TO USE
-
-
-
 
 
 ### Data Compression
