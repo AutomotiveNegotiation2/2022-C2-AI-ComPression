@@ -139,5 +139,5 @@ python3 Voxelization_compression.py --voxel_size 0.8
   - '--compressed_data_path' : 압축 완료된 데이터 경로
 
 ```
-python3 RULE_COMPRESSION.py
+python3 RULE_COMPRESSION.py --raw_data_path=RAW_DATA_STORAGE_DIR --compressed_data_path=COMPRESSED_DATA_STORAGE_DIR
 ```
