@@ -48,7 +48,7 @@ def GPS_compression(arg_list):
             
             print(f"GPS_SPACE_SAVINGS : {space_savings:4.2f}_{compressed_res}")
             gps_list.append(space_savings)
-            #os.remove(os.path.join(raw_data_path,gps_f))
+            os.remove(os.path.join(raw_data_path,gps_f))
 
 
 def CAM_compression(arg_list):
