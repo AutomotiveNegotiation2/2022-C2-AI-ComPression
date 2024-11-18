@@ -69,7 +69,26 @@ def CAM_compression(arg_list):
             
             break
 
+        if len(cam_data_q) != 0:
+            ori_size = 0
+            cam_d = cam_data_q.popleft()
 
+            files = os.listdir( os.path.join(raw_data_path, cam_d ) )
+            compressed_res = os.path.join(compressed_path, f"CAM_{Vehicle_ID}"+cam_d + ".zip")
+            with zipfile.ZipFile( compressed_res ,mode = "w", compresslevel = 9) as camzip:
+                for f in files:
+                    camzip.write( os.path.join(raw_data_path, cam_d,f), compress_type=zipfile.ZIP_DEFLATED)
+                    ori_size += os.path.getsize( os.path.join(raw_data_path, cam_d,f) )
+                camzip.close()
+            com_size = os.path.getsize(  compressed_res )
+            if (ori_size == 0) or (com_size == 0) :
+                continue
+            
+            space_savings = (1 - ( com_size / ori_size)) * 100
+            print(f"CAM_SPACE_SAVINGS : {space_savings:4.2f}_{compressed_res}")
+            
+            #time.sleep(0.4)
+            shutil.rmtree(os.path.join(raw_data_path, cam_d))
 
 def DEM_compression(arg_list):
     Vehicle_ID = arg_list[1]["Vehicle_ID"]
