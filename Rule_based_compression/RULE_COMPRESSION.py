@@ -154,7 +154,7 @@ def CANFD_compression(arg_list):
             space_savings = (1 - ( com_size / ori_size)) * 100
             canfd_list.append(space_savings)
             print(f"CAN_SPACE_SAVINGS : {space_savings:4.2f} _ {compressed_res}")
-            #os.remove(os.path.join(raw_data_path,canfd_f))
+            os.remove(os.path.join(raw_data_path,canfd_f))
 
 def RuleCompression():
 
