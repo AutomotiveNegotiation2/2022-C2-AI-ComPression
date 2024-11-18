@@ -14,12 +14,11 @@ def get_argument_parser():
                         help='raw_data_path')
     parser.add_argument('--compressed_data_path', type=str, default="COMPRESSED_DATA_STORAGE_DIR",
                         help='compressed_data_path')
-    
     return parser
 
 def GPS_compression(arg_list):
     Vehicle_ID = arg_list[1]["Vehicle_ID"]
-    compressed_path = os.path.join(arg_list[0].compressed_data_path) #,"GPS_DIR")
+    compressed_path = os.path.join(arg_list[0].compressed_data_path) 
     raw_data_path = os.path.join(arg_list[0].raw_data_path,"GPS_DIR")
     file_list = os.listdir(raw_data_path)
     file_list.sort()
@@ -38,8 +37,8 @@ def GPS_compression(arg_list):
             gps_f = gps_data_q.popleft()
             file_name = gps_f.split(".")[0]
             compressed_res = os.path.join( compressed_path, f"GPS_{Vehicle_ID}" + file_name +".zip")
-            my_zip = zipfile.ZipFile(compressed_res  ,mode= 'w', compresslevel = 9)  # zip파일 쓰기모드
-            my_zip.write( os.path.join(raw_data_path,gps_f), compress_type=zipfile.ZIP_DEFLATED )         # 압축할 파일 write
+            my_zip = zipfile.ZipFile(compressed_res  ,mode= 'w', compresslevel = 9)  
+            my_zip.write( os.path.join(raw_data_path,gps_f), compress_type=zipfile.ZIP_DEFLATED )       
             my_zip.close()
             com_size = os.path.getsize(compressed_res )
             ori_size = os.path.getsize(  os.path.join(raw_data_path,gps_f) )
@@ -54,7 +53,7 @@ def GPS_compression(arg_list):
 
 def CAM_compression(arg_list):
     Vehicle_ID = arg_list[1]["Vehicle_ID"]
-    compressed_path = os.path.join(arg_list[0].compressed_data_path)#,"CAM_DIR")
+    compressed_path = os.path.join(arg_list[0].compressed_data_path)
 
     raw_data_path = os.path.join(arg_list[0].raw_data_path,"CAM_DIR")
     dir_list = os.listdir(raw_data_path)
@@ -66,7 +65,6 @@ def CAM_compression(arg_list):
             
             dir_list = os.listdir(raw_data_path)
             dir_list.sort()
-            
             break
 
         if len(cam_data_q) != 0:
@@ -91,7 +89,7 @@ def CAM_compression(arg_list):
 
 def DEM_compression(arg_list):
     Vehicle_ID = arg_list[1]["Vehicle_ID"]
-    compressed_path = os.path.join(arg_list[0].compressed_data_path) # ,"DEM_DIR")
+    compressed_path = os.path.join(arg_list[0].compressed_data_path) 
     raw_data_path = os.path.join(arg_list[0].raw_data_path,"DEM_DIR")
 
     file_list = os.listdir(raw_data_path)
@@ -103,7 +101,7 @@ def DEM_compression(arg_list):
         if len(dem_data_q) == 0 :
             file_list = os.listdir(raw_data_path)
             file_list.sort()
-            print(f"dem_spacce_savings : {np.mean(dem_list)}")
+            print(f"Mean_ dem_spacce_savings : {np.mean(dem_list)}")
             break
 
         if len(dem_data_q) != 0:
@@ -120,6 +118,7 @@ def DEM_compression(arg_list):
             if (ori_size == 0) or (com_size == 0) :
                 continue
             space_savings = (1 - ( com_size / ori_size)) * 100
+            dem_list.append(space_savings)
             print(f"DEM_SPACE_SAVINGS : {space_savings:4.2f}_{compressed_res}")
             os.remove(os.path.join(raw_data_path,dem_f))
 
@@ -127,7 +126,7 @@ def DEM_compression(arg_list):
 
 def CANFD_compression(arg_list):
     Vehicle_ID = arg_list[1]["Vehicle_ID"]
-    compressed_path = os.path.join(arg_list[0].compressed_data_path) # ,"CANFD_DIR")
+    compressed_path = os.path.join(arg_list[0].compressed_data_path) 
     raw_data_path = os.path.join(arg_list[0].raw_data_path, "CAN_DIR")
     file_list = os.listdir(raw_data_path)
     sorted(file_list)
@@ -168,16 +167,16 @@ def RuleCompression():
     arg_list.append({"Vehicle_ID" : "123eab0804567_"})
 
 
-    p1_GPS = Process(target=GPS_compression,args=(arg_list))
+    p1_GPS = Process(target=GPS_compression,args=(arg_list, ))
     p1_GPS.start()
     
-    p2_CAM = Process(target=CAM_compression,args=(arg_list))
+    p2_CAM = Process(target=CAM_compression,args=(arg_list, ))
     p2_CAM.start()
 
-    p3_DEM = Process(target=DEM_compression,args=(arg_list))
+    p3_DEM = Process(target=DEM_compression,args=(arg_list, ))
     p3_DEM.start()
 
-    p4_CANFD = Process(target=CANFD_compression,args=(arg_list))
+    p4_CANFD = Process(target=CANFD_compression,args=(arg_list, ))
     p4_CANFD.start()
 
 
