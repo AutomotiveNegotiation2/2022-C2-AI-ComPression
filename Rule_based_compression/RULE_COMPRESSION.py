@@ -119,7 +119,7 @@ def DEM_compression(arg_list):
             space_savings = (1 - ( com_size / ori_size)) * 100
             dem_list.append(space_savings)
             print(f"DEM_SPACE_SAVINGS : {space_savings:4.2f}_{compressed_res}")
-            #os.remove(os.path.join(raw_data_path,dem_f))
+            os.remove(os.path.join(raw_data_path,dem_f))
 
 
 
