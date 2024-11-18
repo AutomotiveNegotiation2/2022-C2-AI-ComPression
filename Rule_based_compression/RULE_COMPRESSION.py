@@ -139,7 +139,7 @@ def CANFD_compression(arg_list):
         if len(canfd_data_q) == 0 :
             file_list = os.listdir(raw_data_path)
             sorted(file_list)
-            print(f"canfd_space_savings {np.mean(canfd_list)}")    
+            print(f"[ AVAERAGE ]canfd_space_savings {np.mean(canfd_list)}")    
             break
 
         if len(canfd_data_q) != 0:
