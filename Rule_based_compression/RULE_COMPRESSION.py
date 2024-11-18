@@ -85,8 +85,8 @@ def CAM_compression(arg_list):
                 continue
             
             space_savings = (1 - ( com_size / ori_size)) * 100
-            print(f"CAM_SPACE_SAVINGS : {space_savings:4.2f}_{compressed_res}")
-            
+            #print(f"CAM_SPACE_SAVINGS : {space_savings:4.2f}_{compressed_res}")
+            print(f"CAM_compression : {compressed_res}")
             #time.sleep(0.4)
             shutil.rmtree(os.path.join(raw_data_path, cam_d))
 
@@ -99,6 +99,14 @@ def DEM_compression(arg_list):
     file_list.sort()
     dem_data_q = deque(file_list)
     dem_list = []
+
+    while True:
+        if len(dem_data_q) == 0 :
+            file_list = os.listdir(raw_data_path)
+            file_list.sort()
+            print(f"dem_spacce_savings : {np.mean(dem_list)}")
+            break
+
 
 
 
