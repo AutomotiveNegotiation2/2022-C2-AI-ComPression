@@ -84,7 +84,7 @@ def CAM_compression(arg_list):
             space_savings = (1 - ( com_size / ori_size)) * 100
             print(f"CAM_SPACE_SAVINGS : {space_savings:4.2f}_{compressed_res}")
             cam_list.append(space_savings)
-            #shutil.rmtree(os.path.join(raw_data_path, cam_d))
+            shutil.rmtree(os.path.join(raw_data_path, cam_d))
 
 def DEM_compression(arg_list):
     Vehicle_ID = arg_list[1]["Vehicle_ID"]
