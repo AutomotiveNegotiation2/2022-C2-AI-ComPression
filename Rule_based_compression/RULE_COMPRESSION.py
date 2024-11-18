@@ -48,7 +48,7 @@ def GPS_compression(arg_list):
             
             print(f"GPS_SPACE_SAVINGS : {space_savings:4.2f}_{compressed_res}")
             gps_list.append(space_savings)
-            os.remove(os.path.join(raw_data_path,gps_f))
+            #os.remove(os.path.join(raw_data_path,gps_f))
 
 
 def CAM_compression(arg_list):
@@ -66,9 +66,7 @@ def CAM_compression(arg_list):
             dir_list = os.listdir(raw_data_path)
             dir_list.sort()
             print(f"[ Average ]cam_spacce_savings : {np.mean(cam_list)}")
-
             break
-
         if len(cam_data_q) != 0:
             ori_size = 0
             cam_d = cam_data_q.popleft()
@@ -87,7 +85,7 @@ def CAM_compression(arg_list):
             space_savings = (1 - ( com_size / ori_size)) * 100
             print(f"CAM_SPACE_SAVINGS : {space_savings:4.2f}_{compressed_res}")
             cam_list.append(space_savings)
-            shutil.rmtree(os.path.join(raw_data_path, cam_d))
+            #shutil.rmtree(os.path.join(raw_data_path, cam_d))
 
 def DEM_compression(arg_list):
     Vehicle_ID = arg_list[1]["Vehicle_ID"]
@@ -122,7 +120,7 @@ def DEM_compression(arg_list):
             space_savings = (1 - ( com_size / ori_size)) * 100
             dem_list.append(space_savings)
             print(f"DEM_SPACE_SAVINGS : {space_savings:4.2f}_{compressed_res}")
-            os.remove(os.path.join(raw_data_path,dem_f))
+            #os.remove(os.path.join(raw_data_path,dem_f))
 
 
 
@@ -155,8 +153,9 @@ def CANFD_compression(arg_list):
             if (ori_size == 0) or (com_size == 0) :
                 continue
             space_savings = (1 - ( com_size / ori_size)) * 100
+            canfd_list.append(space_savings)
             print(f"CAN_SPACE_SAVINGS : {space_savings:4.2f} _ {compressed_res}")
-            os.remove(os.path.join(raw_data_path,canfd_f))
+            #os.remove(os.path.join(raw_data_path,canfd_f))
 
 def RuleCompression():
 
