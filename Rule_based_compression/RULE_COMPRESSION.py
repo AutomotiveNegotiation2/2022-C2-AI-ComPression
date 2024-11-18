@@ -85,9 +85,8 @@ def CAM_compression(arg_list):
                 continue
             
             space_savings = (1 - ( com_size / ori_size)) * 100
-            #print(f"CAM_SPACE_SAVINGS : {space_savings:4.2f}_{compressed_res}")
-            print(f"CAM_compression : {compressed_res}")
-            #time.sleep(0.4)
+            print(f"CAM_SPACE_SAVINGS : {space_savings:4.2f}_{compressed_res}")
+            
             shutil.rmtree(os.path.join(raw_data_path, cam_d))
 
 def DEM_compression(arg_list):
@@ -122,7 +121,6 @@ def DEM_compression(arg_list):
                 continue
             space_savings = (1 - ( com_size / ori_size)) * 100
             print(f"DEM_SPACE_SAVINGS : {space_savings:4.2f}_{compressed_res}")
-            #time.sleep(0.4)
             os.remove(os.path.join(raw_data_path,dem_f))
 
 
@@ -157,7 +155,6 @@ def CANFD_compression(arg_list):
                 continue
             space_savings = (1 - ( com_size / ori_size)) * 100
             print(f"CAN_SPACE_SAVINGS : {space_savings:4.2f} _ {compressed_res}")
-            #time.sleep(0.3)
             os.remove(os.path.join(raw_data_path,canfd_f))
 
 def RuleCompression():
