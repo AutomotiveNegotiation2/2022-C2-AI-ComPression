@@ -112,7 +112,7 @@ python3 Voxelization_compression.py --voxel_size [float] --pcd_data_dir [pcd dat
  
 
 - 사용 예시
-  - 복셀라이제이션 파라미터 조정 : --voxel_size  
+  - 복셀라이제이션 파라미터 조정 : --voxel_size   
 
 ```
 python3 Voxelization_compression.py --voxel_size 0.8
@@ -131,7 +131,7 @@ python3 Voxelization_compression.py --voxel_size 0.8
 - 출력 결과 : 원본 이미지 압축결과 순서
   - 첫번째 그래프는 원본 Point 개수와 복셀라이제이션 후 Point 개수를 나타냄
   - 두번째 그래프는 Space Savinsg를 나타냄
-  - Command line : 압축 로그 
+  - Command line에서 압축 로그 출력
 
 
 - 멀티 프로세스 기반 압축 프로그램
