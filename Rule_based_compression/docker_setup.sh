@@ -1,5 +1,5 @@
 #!/bin/bash
-
+echo "Docker setup"
 apt update -y && apt upgrade -y && apt-get install python3-pip -y
 apt-get install -y libsm6 libxext6 libxrender-dev
 apt install libgl1-mesa-glx -y
