@@ -141,6 +141,8 @@ python3 Voxelization_compression.py --voxel_size 0.8
 
 ![alt text](README.assets/image.png)
 
+- 압축 결과
+
 - 실행 방법 (우분투 터미널 환경)
 ```
 python3 RULE_COMPRESSION.py --raw_data_path=RAW_DATA_STORAGE_DIR --compressed_data_path=COMPRESSED_DATA_STORAGE_DIR
