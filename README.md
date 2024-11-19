@@ -21,7 +21,7 @@
   - 압축 성능이 좋으나 실시간 압축 불가 -> 하이브리드 압축 모델로 압축 방식 개선
   - version 1.0.0
 - **Rule_based_compression** : 복셀라이제이션 기반 압축 모델, zip 기반 다중 압축 방법
-  - PCD 데이터 압축 방식 고도화 예정
+  - 라이다 데이터 복셀라이제이션 압축 (압축 방식 고도화)
   - CANFD, Image, dem, GPS 데이터 압축
   - version 1.1.0
 - **SensorData_Parser** : 다종 센서 데이터 수집 
