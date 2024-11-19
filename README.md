@@ -203,6 +203,12 @@ https://drive.google.com/drive/folders/1q6BlaVfhL8DpyhRHqT7par3zRNFZTzsJ?usp=dri
 - Sensor Data Parser
    - CANFD, CAMERA, GPS
    - generating DEM
+
+- version 1.1.0
+  - SensorData_paser
+    - Timestamp, Detection
+  - Rulebased_compression
+    - multi_processing
    
 
 
