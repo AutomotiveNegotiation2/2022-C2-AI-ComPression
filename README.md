@@ -22,6 +22,7 @@
   - version 1.0.0
 - **Rule_based_compression** : 복셀라이제이션 기반 압축 모델, zip 기반 다중 압축 방법
   - PCD 데이터 압축 방식 고도화 예정
+  - CANFD, Image, dem, GPS 데이터 압축
   - version 1.1.0
 - **SensorData_Parser** : 다종 센서 데이터 수집 
   - GPS, Camera, CANFD 수집 및 Driving Environment Message(DEM) 생성 코드
