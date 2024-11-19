@@ -112,6 +112,7 @@ python3 Voxelization_compression.py --voxel_size [float] --pcd_data_dir [pcd dat
  
 
 - 사용 예시
+  - 복셀라이제이션 파라미터 조정 : --voxel_size  
 
 ```
 python3 Voxelization_compression.py --voxel_size 0.8
@@ -137,7 +138,7 @@ python3 Voxelization_compression.py --voxel_size 0.8
   - DEM, CANFD, Image, GPS 데이터를 멀티 프로세스 기반으로 압축함
   - '--raw_data_path' : 압축 전 데이터 경로
   - '--compressed_data_path' : 압축 완료된 데이터 경로
-- 실행 방법 (터미널 환경)
+- 실행 방법 (우분투 터미널 환경)
 ```
 python3 RULE_COMPRESSION.py --raw_data_path=RAW_DATA_STORAGE_DIR --compressed_data_path=COMPRESSED_DATA_STORAGE_DIR
 ```
