@@ -134,7 +134,7 @@ python3 Voxelization_compression.py --voxel_size 0.8
 
 
 - 멀티 프로세스 기반 압축 프로그램
-  - DEM, CANFD, Image, GPS
+  - DEM, CANFD, Image, GPS 데이터를 멀티 프로세스 기반으로 압축함
   - '--raw_data_path' : 압축 전 데이터 경로
   - '--compressed_data_path' : 압축 완료된 데이터 경로
 
