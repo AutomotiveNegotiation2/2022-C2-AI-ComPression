@@ -26,7 +26,8 @@
   - version 1.1.0
 - **SensorData_Parser** : 다종 센서 데이터 수집 
   - GPS, Camera, CANFD 수집 및 Driving Environment Message(DEM) 생성 코드
-  - version 1.0.1
+  - Detection 및 timestamp 코드 추가
+  - version 1.1.0
 
 
 
