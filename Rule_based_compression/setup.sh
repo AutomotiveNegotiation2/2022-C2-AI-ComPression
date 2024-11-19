@@ -7,5 +7,6 @@ sudo apt-get install curl -y
 python3 -m pip install --upgrade pip
 python3 -m pip install --upgrade Pillow
 pip3 install open3d==0.15.2
+pip3 install opencv-python
 
 echo "ENV_SETUP_DONE"
