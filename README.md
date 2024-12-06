@@ -13,22 +13,20 @@
   - AI_based_compression
   - Rule_based_compression
   - SensorData_Parser
-
+  - Hybrid_based_compression
 
 ### Compression Code Description
 
 - **AI_based_compression** : biGRU 기반 AI 압축 모델(Dzip)
   - 압축 성능이 좋으나 실시간 압축 불가 -> 하이브리드 압축 모델로 압축 방식 개선
-  - version 1.0.0
 - **Rule_based_compression** : 복셀라이제이션 기반 압축 모델, zip 기반 다중 압축 방법
   - 라이다 데이터 복셀라이제이션 압축 (압축 방식 고도화)
   - CANFD, Image, dem, GPS 데이터 압축
-  - version 1.1.0
 - **SensorData_Parser** : 다종 센서 데이터 수집 
   - GPS, Camera, CANFD 수집 및 Driving Environment Message(DEM) 생성 코드
-  - Detection 및 timestamp 코드 추가
-  - version 1.1.0
-
+- **Hybrid_based_compression** : 하이브리드 기반 압축 모델 
+  - 주행 상태에 따라 인공지능 및 규칙 기반 압축 방법을 사용하는 압축 모델
+  - 인공지능 압축인 Dzip과 규칙 기반 압축인 zlib을 활용함
 
 
 # RESULT
@@ -69,6 +67,26 @@
 
 ![image_voxelization](README.assets/voxelization_result.png)
 
+
+
+### Hybrid Compression
+
+
+- 하이브리드 압축 모듈 성능 평가
+
+  - **주행 시 룰 기반 압축**을 사용하며 **정차 시 AI 기반 압축**을 사용하는 압축 모듈 
+
+    ![하이브리드압축모듈](README.assets/compression_process.JPG)
+
+  - 하이브리드 압축 모듈 압축 결과
+
+    - 활용 데이터 : peak can을 활용하여 CN7 아반떼에서 CAN 패킷을 수집함
+      - CAN 데이터에서 2400 패킷을 파싱하여 압축함.
+
+    ![하이브리드압축성능](README.assets/compression_result.JPG)
+
+    - 룰 기반 압축률 :  80%
+    - AI 기반 압축률 : 73%
 
 
 ## Data open
