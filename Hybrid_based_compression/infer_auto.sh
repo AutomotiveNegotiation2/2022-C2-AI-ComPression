@@ -1,5 +1,5 @@
 #!/bin/bash
-can_dir=""
+can_dir="2022_09_06_12_30_06.txt"
 hd1=" "
 hd2=" "
 nls=" "

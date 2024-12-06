@@ -85,8 +85,8 @@
 
     ![하이브리드압축성능](README.assets/compression_result.JPG)
 
-    - 룰 기반 압축률 :  80%
-    - AI 기반 압축률 : 73%
+    - 규칙 기반 압축 모델의 성능 :  80%
+    - AI 기반 압축 모델의 성능 : 73%
 
 
 ## Data open

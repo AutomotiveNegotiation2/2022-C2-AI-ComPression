@@ -23,6 +23,7 @@
 ```
 docker pull nvidia/cuda:11.2.2-cudnn8-devel-ubuntu18.04
 docker run -it --gpus all -d -v /tmp/.X11-unix:/tmp/.X11-unix -v /home/user:/root/data -e DISPLAY=unix$DISPLAY --env="NVIDIA_DRIVER_CAPABILITIES=all" --name compression_docker nvidia/cuda:11.2.2-cudnn8-devel-ubuntu18.04 /bin/bash
+
 ```
 
 - 글로벌 환경 세팅
@@ -82,6 +83,7 @@ bash can_download_weight_cfg.sh
     - epoch : 학습 에폭 개수
 
 ```
+mkdir train_dataset
 bash infer_auto.sh
 ```
 
