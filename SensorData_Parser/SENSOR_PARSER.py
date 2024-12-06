@@ -10,10 +10,11 @@ import GPS_read
 import CANFD_read
 import DEM_gen
 import DETECT_read ## YOLO BBOX
+import TIMESTAMP_read
 
 def get_argument_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--raw_data_path', type=str, default='/root/data/(20240605)compression_AI-main/compression_model/data/RAW_DATA_STORAGE_DIR',
+    parser.add_argument('--raw_data_path', type=str, default='data/RAW_DATA_STORAGE_DIR',
                         help='raw_data_path')
     return parser
 
@@ -30,6 +31,8 @@ def CAM_PARSER(arg_list, ):
 def CANFD_PARSER(arg_list,):
     CANFD_read.read_data(arg_list,)
 
+def TIMESTAMP_PARSER(arg_list,):
+    TIMESTAMP_read.read_data(arg_list,)
 
 def DETECT_PARSER(arg_list,):
 
@@ -44,11 +47,11 @@ def DEM_PARSER(arg_list,):
     DEM_gen.DEM_GEN(arg_list,)
 
 def DAT_GEN(arg_list,):
-        # 0 : canfd
-        # 1 :
-        # 2 : DEM
-        # 3 : GPS
-        # 4 : Camera
+    # 0 : canfd
+    # 1 :
+    # 2 : DEM
+    # 3 : GPS
+    # 4 : Camera
 
     save_dir = parse.raw_data_path
     dir_CAM = "CAM_DIR"
@@ -61,11 +64,11 @@ def DAT_GEN(arg_list,):
     dem_data = ""
     
     while True:
- 
+        can_data = arg_list[0]
         dem_data = arg_list[2]
         gps_data = arg_list[3]
         cam_data = arg_list[4]
-        can_data = arg_list[0]
+        
         glob_t = datetime.datetime.now()
         if len(gps_data) * len(can_data) * len(gps_data) * len(cam_data):
             print("dem : ",len(arg_list[2]) , " can : ",len(arg_list[0]) ," g : ", len(arg_list[3]) ," cam : ", len(arg_list[4]))
@@ -125,7 +128,9 @@ if __name__ == "__main__":
     p6_TIMESTAMP_PARSER.start()
 
     p7_DAT_GEN = Process(target=DAT_GEN, args=(data_list,))
-    p7_DAT_GEN.start()    
+    p7_DAT_GEN.start()
+
+
     
     p1_GPS.join()
     p2_CAM.join()
